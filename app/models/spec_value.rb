@@ -1,0 +1,2 @@
+class SpecValue < ApplicationRecord
+end
