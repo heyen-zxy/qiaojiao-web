@@ -75,6 +75,7 @@ group :development do
   gem 'annotate'
   gem 'mina',                           '0.3.8'
 end
+gem 'jquery-rails'
 gem 'grape-swagger', '>= 0.32.1'
 gem 'grape-swagger-rails'
 gem 'grape-swagger-ui'
@@ -85,3 +86,7 @@ gem 'wechat'
 gem 'wx_pay'
 gem 'exception_notification'
 gem 'whenever', require: false
+
+gem 'bootstrap-sass', '~> 3.4.1'
+gem 'sassc-rails', '>= 2.1.0'
+gem 'adminlte-rails'
