@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+  <title>巧匠优家</title>
+  <meta http-equiv="Content-Type" content="text/html" charset="gb2312" >
+
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+
+  <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => false %>
+
+  <%= csrf_meta_tags %>
+  <!--<script src="https://unpkg.com/qiniu-js@1.0.24/dist/qiniu.min.js"></script>-->
+
+
+  <!-- Google Font -->
+
+</head>
+<%= javascript_include_tag 'application', 'data-turbolinks-track' => false %>
+
+
+<body class="hold-transition login-page">
+
+      <%= yield %>
+
+</body>
+
+
+</html>

@@ -12,7 +12,7 @@
 
 ActiveRecord::Schema.define(version: 2021_01_10_135249) do
 
-  create_table "admins", force: :cascade do |t|
+  create_table "admins", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
     t.string "phone"
@@ -26,14 +26,14 @@ ActiveRecord::Schema.define(version: 2021_01_10_135249) do
     t.index ["reset_password_token"], name: "index_admins_on_reset_password_token", unique: true
   end
 
-  create_table "categories", force: :cascade do |t|
+  create_table "categories", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name"
     t.string "ancestry"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "norms", force: :cascade do |t|
+  create_table "norms", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.integer "product_id"
     t.integer "price"
     t.string "name"
@@ -44,12 +44,12 @@ ActiveRecord::Schema.define(version: 2021_01_10_135249) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "orders", force: :cascade do |t|
+  create_table "orders", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "payment_logs", force: :cascade do |t|
+  create_table "payment_logs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "payment_id"
     t.text "apply_res"
     t.string "prepay_id"
@@ -58,7 +58,7 @@ ActiveRecord::Schema.define(version: 2021_01_10_135249) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "payments", force: :cascade do |t|
+  create_table "payments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.integer "order_id"
     t.integer "user_id"
     t.string "type"
@@ -68,7 +68,7 @@ ActiveRecord::Schema.define(version: 2021_01_10_135249) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "products", force: :cascade do |t|
+  create_table "products", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.integer "category_id"
     t.string "type"
     t.string "name"
@@ -80,7 +80,7 @@ ActiveRecord::Schema.define(version: 2021_01_10_135249) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "resources", force: :cascade do |t|
+  create_table "resources", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "target"
     t.string "action"
     t.text "desc"
@@ -88,35 +88,35 @@ ActiveRecord::Schema.define(version: 2021_01_10_135249) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "role_resources", force: :cascade do |t|
+  create_table "role_resources", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.integer "role_id"
     t.integer "resource_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "roles", force: :cascade do |t|
+  create_table "roles", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name"
     t.text "desc"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "spec_values", force: :cascade do |t|
+  create_table "spec_values", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.integer "spec_id"
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "specs", force: :cascade do |t|
+  create_table "specs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.integer "product_id"
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "users", force: :cascade do |t|
+  create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "authentication_token"
     t.string "code"
     t.integer "gender"
