@@ -89,5 +89,17 @@ gem 'whenever', require: false
 
 gem 'bootstrap-sass', '~> 3.4.1'
 gem 'sassc-rails', '>= 2.1.0'
-gem 'adminlte-rails'
-# gem 'adminlte-rails', github: 'shine60vn/adminlte-rails', branch: 'master'
+# gem 'adminlte-rails'
+gem 'adminlte2-rails'
+
+
+gem 'rails_admin', '~> 2.0'        # 后台数据管理
+gem 'paper_trail'
+gem 'cancancan' # 组织架构树结构
+gem 'rails_admin_nestable',             '~> 0.3.2'            # railsadmin 树结构支持
+gem 'simple_form'                                             # form表单
+gem 'kaminari-bootstrap', '~> 3.0.1'                          # 分页 bootstrap样式
+gem 'china_city'
+gem 'active_importer'
+gem 'rest-client'
+

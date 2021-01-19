@@ -8,12 +8,23 @@ Bundler.require(*Rails.groups)
 
 module QiaojiangWeb
   class Application < Rails::Application
+
+    config.to_prepare do
+      Devise::SessionsController.layout 'admin_lte_2_login'
+    end
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 5.2
+
 
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration can go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded after loading
     # the framework and any gems in your application.
+    config.i18n.load_path += Dir[Rails.root.join('config', 'locales', 'zh-CN', '*.yml').to_s]
+    config.i18n.available_locales = [:en, 'zh-CN']
+    config.i18n.default_locale = 'zh-CN'
+    config.eager_load_paths += %W(#{Rails.root.join}/lib)
+    config.time_zone = 'Beijing'
+    config.active_record.default_timezone = :local
   end
 end

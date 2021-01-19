@@ -1,34 +1,31 @@
-
-
 <div class="login-box">
   <div class="login-logo">
-    <a href="../../index2.html"><b>巧匠</b>优家</a>
-  </div>
-  <!-- /.login-logo -->
+    <a href="/"><b>巧匠</b>优家</a>
+  </div><!-- /.login-logo -->
   <div class="login-box-body">
-    <p class="login-box-msg">Sign in to start your session</p>
-
+    <p class="login-box-msg">登录您的账号</p>
     <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
       <div class="form-group has-feedback">
-        <%= f.text_field :phone, autofocus: true, placeholder: "账号", class: "form-control"  %>
-        <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+        <%= f.text_field :phone, class: 'form-control', autofocus: true, placeholder: '账号'%>
+        <span class="glyphicon glyphicon-phone form-control-feedback"></span>
       </div>
+
       <div class="form-group has-feedback">
-        <%= f.password_field :password, placeholder: "密码", class: "form-control"  %>
+        <%= f.password_field :password, class: 'form-control', autocomplete: 'off', placeholder: '密码' %>
         <span class="glyphicon glyphicon-lock form-control-feedback"></span>
       </div>
       <div class="row">
         <div class="col-xs-8">
-        </div>
-        <!-- /.col -->
-        <div class="col-xs-4">
-          <button type="submit" class="btn btn-primary btn-block btn-flat">Sign In</button>
-        </div>
-        <!-- /.col -->
-      </div>
-    <% end %>
-    <!-- /.social-auth-links -->
+          <div class="checkbox icheck">
 
-  </div>
-  <!-- /.login-box-body -->
-</div>
+          </div>
+        </div><!-- /.col -->
+        <div class="col-xs-4">
+          <%= f.submit '登录', class: 'btn btn-primary btn-block btn-flat' %>
+
+        </div><!-- /.col -->
+      </div>
+
+    <% end %>
+  </div><!-- /.login-box-body -->
+</div><!-- /.login-box -->
