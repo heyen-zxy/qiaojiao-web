@@ -13,8 +13,9 @@
 //= require jquery
 //= require rails-ujs
 //= require activestorage
-//= require turbolinks
 //= require bootstrap
+//= require select2-full
+//= require summernote/summernote-bs4.min
 //= require app
 //= require_tree .
 
@@ -35,7 +36,23 @@ var initPage = function () {
   $(".modal").on("hidden.bs.modal", function() {
     $(this).removeData("bs.modal");
   });
+
+  $('[data-provider="summernote"]').each(function(){
+    editor = this
+    console.log()
+    $(this).summernote({
+      height: 600,
+      callbacks: {
+        onImageUpload: function(files) {
+          sendFile(files[0], editor);
+        }
+      }
+    })
+  })
+
+
   textToImg();
+  $('select').select2();
   $.fn.modal.Constructor.prototype.enforceFocus = function () { };
   // $('.todo-list').todoList({
   //   onCheck  : function () {
@@ -79,7 +96,6 @@ function textToImg() {
     context.textBaseline = "middle";
 
     var name = $(canvas).attr('first_name');
-    console.log(name)
     context.fillText(name, fontSize, fontSize);
     $(canvas).siblings('img').attr('src', canvas.toDataURL("image/png"));
   }
@@ -117,8 +133,78 @@ function hideSpinner() {
   $("#spinner").removeClass("spinner");
 }
 
+function selectImage(e){
+  if($(e).hasClass('selected')){
+    $(e).removeClass('selected')
+  }else{
+    $(e).addClass('selected')
+  }
+}
+
+function selectedImages(){
+  var selectIds = []
+  $('#select_attachments').html('');
+  $('img.selected').each(function(e){
+    selectIds.push($(this).attr('file_id'));
+    $('#select_attachments').append('<div class="col-md-3"><img src="' + $(this).attr('src') + '" style="width: 100px; height:100px;" ></div>');
+  });
+  console.log(selectIds)
+  $('#select_attachment_ids').val(selectIds);
+
+  $('#file-modal').modal('hide')
+}
+
+function add_norm(){
+  $('.norm-rows').append('<div class="row norm-row">\n' +
+    '          <div class="col-md-4 form-group">\n' +
+    '            <div class="input-group">\n' +
+    '              <div class="input-group-addon required">\n' +
+    '                规格名<abbr title="required">*</abbr>\n' +
+    '              </div>\n' +
+    '              <input type="text" name=\'new_norms[]\' class="form-control">\n' +
+    '\n' +
+    '            </div>\n' +
+    '            <!-- /.input group -->\n' +
+    '          </div>\n' +
+    '\n' +
+    '          <div class="col-md-4 form-group">\n' +
+    '            <div class="input-group">\n' +
+    '              <div class="input-group-addon required">\n' +
+    '                价格<abbr title="required">*</abbr>\n' +
+    '              </div>\n' +
+    '              <input type="number" name=\'new_prices[]\' class="form-control">\n' +
+    '            </div>\n' +
+    '            <!-- /.input group -->\n' +
+    '          </div>\n' +
+    '          <div class="col-md-1 form-group">\n' +
+    '            <div class="input-group">\n' +
+    '              <a href=\'javascript:void(0)\' class="delete_norm" onclick="delete_norm(this)">删除</a>\n' +
+    '            </div>\n' +
+    '          </div>\n' +
+    '        </div>')
+}
+
+function delete_norm(e){
+  $(e).parents('.norm-row').remove()
+}
+
+function sendFile(file, editor) {
+  data = new FormData();
+  data.append("file", file);
+  $.ajax({
+    data: data,
+    type: "POST",
+    url: '/attachments/upload_file',
+    cache: false,
+    contentType: false,
+    processData: false,
+    success: function (data) {
+      $(editor).summernote("insertImage",data['url'])
+    }
+  });
+}
+
 $(document).ready(initPage);
-$(document).on("turbolinks:load", initPage);
 
 
 

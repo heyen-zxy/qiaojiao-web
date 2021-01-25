@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_01_19_153021) do
+ActiveRecord::Schema.define(version: 2021_01_22_191141) do
 
   create_table "admins", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -28,9 +28,24 @@ ActiveRecord::Schema.define(version: 2021_01_19_153021) do
     t.index ["reset_password_token"], name: "index_admins_on_reset_password_token", unique: true
   end
 
+  create_table "attachments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "type"
+    t.string "file_path"
+    t.string "file_name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "categories", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name"
     t.string "ancestry"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "model_attachments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.integer "model_id"
+    t.integer "attachment_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -72,11 +87,11 @@ ActiveRecord::Schema.define(version: 2021_01_19_153021) do
 
   create_table "products", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.integer "category_id"
-    t.string "type"
+    t.string "product_type"
     t.string "name"
-    t.string "status"
+    t.string "status", default: "off"
     t.integer "sale", default: 0
-    t.float "commission"
+    t.integer "commission"
     t.text "desc"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

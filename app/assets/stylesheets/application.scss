@@ -13,7 +13,34 @@
  *= require bootstrap
  *= require AdminLTE/AdminLTE
  *= require AdminLTE/skins/skin-blue
+ *= require select2
+ *= require select2-bootstrap
+ *= require font-awesome
  *= require_tree .
- *= require_self
+ *= require_selfselect_image
  */
+
+@import "summernote-bs4";
+
+.attachments-list .selected{
+    border: 1px solid #6B76FF;
+}
+.required abbr{
+    color: red
+}
+
+.invalid-feedback{
+    color: red
+}
+.spinner {
+    display: block;
+    position:   fixed;
+    z-index:    1200;
+    top:        0;
+    left:       0;
+    height:     100%;
+    width:      100%;
+    background: rgba( 255, 255, 255, .8 ) 50% 50% no-repeat;
+}
+
 

@@ -4,9 +4,9 @@ class CreateProducts < ActiveRecord::Migration[5.2]
       t.integer :category_id
       t.string :type
       t.string :name
-      t.string :status
+      t.string :status, default: 'off'
       t.integer :sale, default: 0
-      t.float :commission
+      t.integer :commission
       t.text :desc
       t.timestamps
     end

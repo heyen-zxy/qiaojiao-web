@@ -1,0 +1,123 @@
+<%= simple_form_for  [:admin, @product], class: 'forms-sample' do |f| %>
+  <div class="box box box-info ">
+    <div class="box-header with-border">
+      <h3 class="box-title">基础信息</h3>
+    </div>
+    <div class="box-body">
+      <div class="row">
+        <div class="col-md-6 form-group">
+          <%= f.input :name %>
+        </div>
+
+        <div class="col-md-6">
+          <%= f.input :product_type, collection: Product.type_select %>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6 form-group">
+          <%= f.input :category_id, collection: Category.select_options %>
+        </div>
+        <div class="col-md-6 form-group">
+          <%= f.input :status, collection: Product.status_select %>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6 form-group">
+          <%= f.input :commission, as: :float, input_html: {value: @product.view_commission} %>
+        </div>
+      </div>
+      <div class="row">
+
+        <div class="col-md-6 form-group">
+          <div class=" string optional service_images form-inline">
+            <label class="form-control-label string optional col-form-label select_image_ids required" style="display: inline" for="service_images">图片<abbr title="required">*</abbr></label>
+
+            <input style="display:none" class="form-control string optional select_attachment_ids" type="text" name="attachment_ids" id="select_attachment_ids" value="<%= @product.attachment_ids.join(',') %>">
+            <%= link_to '选择图片', admin_attachments_path, class: 'btn btn-primary btn-sm', 'data-toggle' => "modal", 'data-target' => "#file-modal" %>
+            <% if @product.errors[:attachments].present? %>
+              <div class="invalid-feedback" style="display: inline">图片<%= @product.errors[:attachments].first %></div>
+            <% end %>
+          </div>
+          <div class="form-group string optional service_images form-inline">
+            <div id="select_attachments" class="row lightGallery image_select_group">
+              <% @product.attachments.each do |attachment| %>
+                <div class="col-md-3"><img src="<%= attachment.preview_url %>" style="width: 100px; height:100px;" ></div>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="box" style="margin-top: 20px;">
+    <div class="box-body">
+      <h4 class="box-title">规格</h4>
+      <div class="norm-rows">
+        <% @product.norms.each do |norm| %>
+          <div class="row norm-row">
+            <div class="col-md-4 form-group">
+              <div class="input-group">
+                <div class="input-group-addon required">
+                  规格名<abbr title="required">*</abbr>
+                </div>
+                <input type="text" name='norms[<%= norm.id %>]' class="form-control" value="<%= norm.name %>">
+                <% if norm.errors[:name].present? %>
+                  <div class="invalid-feedback" style="display: inline"><%= norm.errors[:name].first %></div>
+                <% end %>
+              </div>
+              <!-- /.input group -->
+            </div>
+
+            <div class="col-md-4 form-group">
+              <div class="input-group">
+                <div class="input-group-addon required">
+                  价格<abbr title="required">*</abbr>
+                </div>
+                <input type="number" name='prices[<%= norm.id %>]' class="form-control" value="<%= norm.view_price %>">
+                <% if norm.errors[:price].present? %>
+                  <div class="invalid-feedback" style="display: inline"><%= norm.errors[:price].first %></div>
+                <% end %>
+              </div>
+              <!-- /.input group -->
+            </div>
+            <div class="col-md-1 form-group">
+              <div class="input-group">
+                <a href='javascript:void(0)' class="delete_norm" onclick="delete_norm(this)">删除</a>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+      <div class="row">
+        <div class="col-md-2">
+          <a href='javascript:void(0)' class="btn btn-primary btn-block margin-bottom" onclick="add_norm()">
+            <i class="fa fa-plus"></i><span>添加规格</span></a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="box" style="margin-top: 20px;">
+    <div class="box-body">
+      <h4 class="box-title">商品详情</h4>
+      <div class="row">
+        <div class="col-md-12">
+          <%= f.input :desc, as: :summernote %>
+        </div>
+
+      </div>
+
+      <div class="row">
+        <div class="col-md-11">
+        </div>
+        <div class="col-md-1">
+          <%= f.submit '确认', class: 'btn btn-primary' %>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
+

@@ -102,4 +102,8 @@ gem 'kaminari-bootstrap', '~> 3.0.1'                          # 分页 bootstrap
 gem 'china_city'
 gem 'active_importer'
 gem 'rest-client'
+gem 'jquery-slimscroll-rails'
+gem "select2-rails"
+gem 'summernote-rails'
+gem 'font-awesome-rails'
 

@@ -3,8 +3,8 @@ class Admin < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable
-  validates_presence_of :phone, :login, :name
-  validates_uniqueness_of :phone, :login
+  validates_presence_of :phone, :name
+  validates_uniqueness_of :phone
 
   belongs_to :role
 

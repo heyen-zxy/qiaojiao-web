@@ -1,0 +1,7 @@
+<% attachments.each do |attachment| %>
+  <div style="margin: 10px;" >
+    <% if attachment.preview_url.present? %>
+    <image src="<%= attachment.preview_url %>" style="width: 160px; height:90px;" class="select_image" onclick="selectImage(this)" file_id="<%= attachment.id %>"></image>
+    <% end %>
+  </div>
+<% end %>
