@@ -1,0 +1,3 @@
+class BannerAttachment < Attachment
+
+end

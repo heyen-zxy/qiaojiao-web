@@ -1,0 +1,3 @@
+class ServerUserAttachment < Attachment
+
+end

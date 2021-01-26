@@ -16,6 +16,7 @@
 //= require bootstrap
 //= require select2-full
 //= require summernote/summernote-bs4.min
+//= require lazyload
 //= require app
 //= require_tree .
 
@@ -36,6 +37,8 @@ var initPage = function () {
   $(".modal").on("hidden.bs.modal", function() {
     $(this).removeData("bs.modal");
   });
+
+  setTableColor()
 
   $('[data-provider="summernote"]').each(function(){
     editor = this
@@ -202,6 +205,14 @@ function sendFile(file, editor) {
       $(editor).summernote("insertImage",data['url'])
     }
   });
+}
+
+function setTableColor(){
+  i = 0
+  $('.box-body table tr').each(function(e){
+    i += 1;
+    $(this).addClass('odd')
+  })
 }
 
 $(document).ready(initPage);

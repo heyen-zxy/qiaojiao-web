@@ -1,0 +1,67 @@
+<div class="col-md-12">
+  <div class="box">
+    <div class="box-header with-border">
+      <h3 class="box-title">流动广告
+        <% if can? :new, :banners %>
+          <small><%= link_to '添加', new_admin_banner_path, class: 'font-a label bg-green' %></small>
+        <% end %>
+      </h3>
+    </div>
+    <div class="box-tools" style="margin-top: 10px;">
+      <%= form_tag admin_banners_path, method: :get do %>
+        <div class="input-group input-group-sm">
+          <div>
+            <div class="col-xs-6 col-md-9"></div>
+            <div class="col-xs-6 col-md-3">
+              <input type="text" name="table_search" class="form-control" placeholder="商品名搜索" value="<%= params[:table_search] %>">
+            </div>
+          </div>
+
+          <div class="input-group-btn">
+            <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+          </div>
+        </div>
+      <% end %>
+    </div>
+    <!-- /.box-header -->
+    <div class="box-body">
+      <table class="table table-striped">
+        <tbody>
+        <tr>
+          <th>缩略图</th>
+          <th style="width: 20%">编号</th>
+          <th>商品名</th>
+          <th>价格</th>
+          <th>状态</th>
+          <th style="width: 20%"></th>
+        </tr>
+        <% @banners.each do |banner| %>
+          <%= render partial: 'admin/banners/banner', locals: {banner: banner}%>
+        <% end %>
+        </tbody>
+      </table>
+    </div>
+    <div class="box-footer clearfix">
+      <div class="pull-right pagination-sm no-margin">
+        <%= paginate @banners, params: {status: params[:status], banner_type: params[:banner_type], table_search: params[:table_search]}%>
+      </div>
+
+    </div>
+  </div>
+</div>
+<script type='text/javascript'>
+  function change_status(id, status){
+    showSpinner();
+    $.ajax({
+      type: 'POST',
+      url: '<%= change_status_admin_banners_path %>',
+      data: {id: id, status: status},
+      dataType: 'script',
+      success: function (data) {
+
+      }
+    })
+  }
+</script>
+
+

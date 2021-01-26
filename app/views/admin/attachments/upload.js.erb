@@ -1,2 +1,7 @@
-$('.attachments-list').prepend('<div class="col-sm-3 image"><img src="<%= @attachment.preview_url %>" style="width:140px;height:140px;" class="select_image" onclick="selectImage(this)" file_id="<%= @attachment.id %>"></img></div>')
+<% if @attachment.class.name == 'BannerAttachment' %>
+  $('#banner_attachment_id').val(<%= @attachment.id %>)
+  $('#select_attachment').html('<div class="col-sm-12 image"><img src="<%= @attachment.preview_url %>" style="width:300px;height:100px;"  file_id="<%= @attachment.id %>"></img></div>')
+<%else %>
+  $('.attachments-list').prepend('<div class="col-sm-3 image"><img src="<%= @attachment.preview_url %>" style="width:140px;height:140px;" class="select_image" onclick="selectImage(this)" file_id="<%= @attachment.id %>"></img></div>')
+<% end %>
 hideSpinner();

@@ -10,7 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_01_22_191141) do
+ActiveRecord::Schema.define(version: 2021_01_26_082154) do
+
+  create_table "addresses", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "address_code"
+    t.string "desc"
+    t.integer "user_id"
+    t.string "phone"
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "admins", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -24,7 +34,7 @@ ActiveRecord::Schema.define(version: 2021_01_22_191141) do
     t.datetime "updated_at", null: false
     t.string "name"
     t.string "login"
-    t.index ["email"], name: "index_admins_on_email", unique: true
+    t.index ["phone"], name: "index_admins_on_phone"
     t.index ["reset_password_token"], name: "index_admins_on_reset_password_token", unique: true
   end
 
@@ -32,6 +42,15 @@ ActiveRecord::Schema.define(version: 2021_01_22_191141) do
     t.string "type"
     t.string "file_path"
     t.string "file_name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "banners", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "status"
+    t.integer "priority", default: 1
+    t.integer "product_id"
+    t.integer "attachment_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -61,7 +80,27 @@ ActiveRecord::Schema.define(version: 2021_01_22_191141) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "order_norms", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.integer "norm_id"
+    t.integer "product_id"
+    t.integer "order_id"
+    t.integer "number"
+    t.integer "price"
+    t.integer "amount"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "orders", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "no"
+    t.integer "amount"
+    t.string "status"
+    t.integer "user_id"
+    t.datetime "payment_at"
+    t.integer "address_id"
+    t.text "desc"
+    t.integer "admin_id"
+    t.datetime "server_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -95,6 +134,8 @@ ActiveRecord::Schema.define(version: 2021_01_22_191141) do
     t.text "desc"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "no"
+    t.integer "amount", default: 0
   end
 
   create_table "resources", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -149,6 +190,7 @@ ActiveRecord::Schema.define(version: 2021_01_22_191141) do
     t.string "session_token"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "phone"
   end
 
 end

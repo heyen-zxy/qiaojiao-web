@@ -1,0 +1,2 @@
+$('#banner_<%=@banner.id %>').replaceWith('<%= j(render partial: 'admin/banners/banner', locals: {banner: @banner} ) %>')
+hideSpinner()

@@ -1,0 +1,62 @@
+<div class="modal-header">
+  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+    <span aria-hidden="true">×</span></button>
+  <h4 class="modal-title">订单详情</h4>
+</div>
+<div class="modal-body">
+  <!-- Table row -->
+  <div class="row">
+    <div class="col-xs-12 table-responsive">
+      <table class="table table-striped">
+        <thead>
+        <tr>
+          <th>商品、服务名</th>
+          <th>规格</th>
+          <th>价格</th>
+          <th>数量</th>
+          <th>合计</th>
+        </tr>
+        </thead>
+        <tbody>
+        <% @order.order_norms.each do |order_norm| %>
+          <tr>
+            <td><%= order_norm.product&.name %></td>
+            <td><%= order_norm.norm&.name %></td>
+            <td><%= order_norm.view_price %></td>
+            <td><%= order_norm.number %></td>
+            <td><%= order_norm.view_amount %></td>
+          </tr>
+        <% end %>
+        </tbody>
+      </table>
+    </div>
+    <!-- /.col -->
+  </div>
+  <div class="table-responsive">
+    <table class="table">
+      <tbody><tr>
+        <th style="width:50%">总价:</th>
+        <td><%= @order.view_amount %></td>
+      </tr>
+      <tr>
+        <th>收件人姓名</th>
+        <td><%= @order.address&.name %></td>
+      </tr>
+      <tr>
+        <th>收件人号码</th>
+        <td><%= @order.address&.phone %></td>
+      </tr>
+      <tr>
+        <th>收件人地址</th>
+        <td><%= @order.address&.address_name %></td>
+      </tr>
+      <tr>
+        <th>备注</th>
+        <td><%= @order.desc %></td>
+      </tr>
+      </tbody></table>
+  </div>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-primary " data-dismiss="modal">关闭</button>
+</div>

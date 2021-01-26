@@ -106,4 +106,7 @@ gem 'jquery-slimscroll-rails'
 gem "select2-rails"
 gem 'summernote-rails'
 gem 'font-awesome-rails'
+gem 'hashids'
+gem 'china_city'
+gem 'lazyloadjs'
 

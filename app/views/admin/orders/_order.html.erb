@@ -1,0 +1,29 @@
+<tr id="order_<%= order.id %>">
+  <td><%= order.no %></td>
+  <td><%= order.user&.nick_name %></td>
+  <td><%= order.user&.phone %></td>
+  <td><%= order.view_amount %></td>
+  <td><%= order.get_status %></td>
+  <td><%= order.admin&.name %></td>
+  <td>
+    <% if can? :orders, :view %>
+        <%= link_to admin_order_path(order), class: "btn btn-success btn-xs", 'data-toggle' => "modal", 'data-target' => "#myModal" do %>
+        <i class="fa fa-edit"></i>详情
+      <% end %>
+    <% end %>
+
+    <% if can? :orders, :set_server_admin %>
+      <% if order.status == 'paid' %>
+        <%= link_to server_admins_admin_order_path(order), class: "btn btn-primary btn-xs", 'data-toggle' => "modal", 'data-target' => "#myModal" do %>
+          <i class="fa fa-send-o"></i>配送人
+        <% end %>
+      <% end %>
+    <% end %>
+
+    <% if can? :orders, :get_desc %>
+      <%= link_to get_desc_admin_order_path(order), class: "btn btn-primary btn-xs", 'data-toggle' => "modal", 'data-target' => "#myModal" do %>
+        <i class="fa fa-file-o"></i>备注
+      <% end %>
+    <% end %>
+  </td>
+</tr>

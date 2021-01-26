@@ -1,0 +1,38 @@
+<div class="modal-header">
+  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+    <span aria-hidden="true">×</span></button>
+  <h4 class="modal-title">配送、服务人员</h4>
+</div>
+<div class="modal-body">
+  <%= simple_form_for  [:admin, @order], class: 'forms-sample' do |f| %>
+      <div class="box-body">
+        <div class="row">
+          <div class="col-md-12 form-group">
+            <%= f.input :admin_id, collection: Admin.server_users_select, label: '配送服务人员', input_html: {style: 'width: 100%'} %>
+          </div>
+        </div>
+      </div>
+  <% end %>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-default pull-left" data-dismiss="modal">关闭</button>
+  <button type="button" class="btn btn-primary set-admin-server">确认</button>
+</div>
+
+<script type=text/javascript>
+  $(function(){
+    $('select').select2();
+    $('.set-admin-server').click(function(){
+      showSpinner()
+      $.ajax({
+        type: 'POST',
+        url: '<%= set_server_admin_admin_order_path %>',
+        data: {admin_id: $('#order_admin_id').val()},
+        dataType: 'script',
+        success: function (data) {
+
+        }
+      })
+    })
+  })
+</script>

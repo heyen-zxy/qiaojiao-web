@@ -55,6 +55,9 @@
   <div class="box" style="margin-top: 20px;">
     <div class="box-body">
       <h4 class="box-title">规格</h4>
+      <% if @product.errors[:norms].present? %>
+        <div class="invalid-feedback" style="display: inline">规格<%= @product.errors[:norms].first %></div>
+      <% end %>
       <div class="norm-rows">
         <% @product.norms.each do |norm| %>
           <div class="row norm-row">

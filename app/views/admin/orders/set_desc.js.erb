@@ -1,0 +1,3 @@
+$('#order_<%=@order.id %>').replaceWith('<%= j(render partial: 'admin/orders/order', locals: {order: @order} ) %>')
+$('#myModal').modal('hide')
+hideSpinner()

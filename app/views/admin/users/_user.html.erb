@@ -1,0 +1,6 @@
+<tr id="user_<%= user.id %>">
+  <td><%= image_tag user.avatar_url, alt: '头像' , style: 'width: 25px;margin-right: 10px'%><%= user.nick_name %></td>
+  <td><%= user.get_gender %></td>
+  <td><%= user.phone %></td>
+  <td><%= "#{user.country}#{user.province}#{user.city}" %></td>
+</tr>

@@ -1,0 +1,2 @@
+$('#product_<%=@product.id %>').replaceWith('<%= j(render partial: 'admin/products/product', locals: {product: @product} ) %>')
+hideSpinner()

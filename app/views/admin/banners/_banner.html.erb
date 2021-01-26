@@ -1,0 +1,20 @@
+<tr id="banner_<%= banner.id %>">
+  <td><%=image_tag banner.banner_attachment&.preview_url, style: 'width: 150px;height: 50px' %></td>
+  <td ><%= banner.product&.no %></td>
+  <td><%= banner.product&.name %></td>
+  <td><%= banner.product&.price %></td>
+  <td><%= banner.get_status %></td>
+  <td>
+    <% if can? :banners, :change_status %>
+      <% if banner.status == 'on' %>
+        <%= link_to 'JavaScript:void(0)', onclick: "change_status(#{banner.id}, 'off')", class: "btn btn-danger btn-xs" do %>
+          <i class="fa fa-close"></i>无效
+        <% end %>
+      <% else %>
+        <%= link_to 'JavaScript:void(0)', onclick: "change_status(#{banner.id}, 'on')", class: "btn btn-success btn-xs" do %>
+          <i class="fa fa-check"></i>生效
+        <% end %>
+      <% end %>
+    <% end %>
+  </td>
+</tr>

@@ -37,6 +37,12 @@
         <% end %>
       </li>
 
+      <li class="<%= active_class :users %>">
+        <%= link_to admin_users_path do %>
+          <i class="fa fa-users"></i> <span>用户</span>
+        <% end %>
+      </li>
+
       <li class="<%= active_class :in_payments %>">
         <%= link_to admin_in_payments_path do %>
           <i class="fa fa-mail-reply "></i> <span>用户支付记录</span>
@@ -49,17 +55,13 @@
         <% end %>
       </li>
 
-      <li class="<%= active_class :users %>">
-        <%= link_to admin_users_path do %>
-          <i class="fa fa-users"></i> <span>用户</span>
+      <li class="<%= active_class :banners %>">
+        <%= link_to admin_banners_path do %>
+          <i class="fa fa-newspaper-o"></i> <span>流动广告</span>
         <% end %>
       </li>
 
-      <li class="<%= active_class :attachments %>">
-        <%= link_to admin_attachments_path do %>
-          <i class="fa fa-file"></i> <span>文件库</span>
-        <% end %>
-      </li>
+
 
 <!--      <li class="treeview">-->
 <!--        <a href="#"><i class='fa fa-link'></i> <span>Multilevel</span> <i class="fa fa-angle-left pull-right"></i></a>-->

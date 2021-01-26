@@ -8,7 +8,7 @@ class Admin::AttachmentsController < Admin::BaseController
   end
 
   def upload
-    @attachment = ProductAttachment.create file_name: params[:file_name], file_path: params[:file_path]
+    @attachment = Attachment.get_model_name(params[:type]).create file_name: params[:file_name], file_path: params[:file_path]
   end
 
   def upload_file
@@ -29,6 +29,5 @@ class Admin::AttachmentsController < Admin::BaseController
 
   def set_uptoken
     @uptoken = uptoken
-    p uptoken, 2222
   end
 end

@@ -27,7 +27,8 @@ module ApplicationHelper
         in_payments: '用户支付记录',
         out_payments: '佣金汇款记录',
         users: '用户',
-        attachments: '文件库'
+        attachments: '文件库',
+        banners: '流动广告'
     }
     controllers[controller_name.to_sym]
   end

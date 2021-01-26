@@ -7,11 +7,27 @@ Rails.application.routes.draw do
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   namespace :admin, path: ""  do
     root to: 'orders#index'
-    resources :orders
+    resources :orders do
+      member do
+        get :server_admins
+        post :set_server_admin
+        get :get_desc
+        post :set_desc
+      end
+    end
     resources :users
-    resources :products
+    resources :products do
+      collection do
+        post :change_status
+      end
+    end
     resources :in_payments
     resources :out_payments
+    resources :banners do
+      collection do
+        post :change_status
+      end
+    end
     resources :attachments do
       collection do
         post :upload
