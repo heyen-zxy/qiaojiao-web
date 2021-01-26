@@ -4,7 +4,7 @@ class Admin::BannersController < Admin::BaseController
   include ApplicationHelper
   def index
     params[:status] ||= 'on'
-    @banners = Banner.order('updated_at desc, status desc').page(params[:page]).per(20)
+    @banners = Banner.search_conn(params).order('priority desc, status desc').page(params[:page]).per(20)
   end
 
   def new
