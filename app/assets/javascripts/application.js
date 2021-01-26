@@ -15,8 +15,8 @@
 //= require activestorage
 //= require bootstrap
 //= require select2-full
+//= require jquery.lazyload
 //= require summernote/summernote-bs4.min
-//= require lazyload
 //= require app
 //= require_tree .
 
@@ -39,6 +39,7 @@ var initPage = function () {
   });
 
   setTableColor()
+  $("img").lazyload();
 
   $('[data-provider="summernote"]').each(function(){
     editor = this

@@ -25,11 +25,11 @@
     </div>
     <!-- /.col -->
     <div class="col-md-9">
-      <div class="row attachments-list" style="height: 500px;overflow-y: scroll">
+      <div class="row attachments-list" id='attachments-list' style="height: 500px;overflow-y: scroll">
         <% @product_attachments.each do |file| %>
           <% if file.preview_url.present? %>
             <div class="col-sm-3">
-                <img src="<%= file.preview_url %>" style="width: 140px; height:140px;" class="select_image" onclick="selectImage(this)" file_id="<%= file.id %>"></img>
+              <%= image_tag file.preview_url, style: "width: 140px; height:140px;", class: "select_image", onclick: "selectImage(this)", file_id: file.id %>
             </div>
           <% end %>
         <% end %>
@@ -153,6 +153,12 @@
         var bond_qiniu = new QiniuJsSDK();
         var bond_option = set_option('bond');
         var bond_uploader = bond_qiniu.uploader(bond_option);
+
+      $(".modal").on("shown.bs.modal", function(){
+        $("img").lazyload({
+          container:$("#attachments-list")
+        });
+      });
     })
 
 </script>

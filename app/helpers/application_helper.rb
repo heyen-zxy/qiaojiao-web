@@ -43,4 +43,10 @@ module ApplicationHelper
     }
     actions[action_name.to_sym]
   end
+
+  def simple_datetime datetime
+    if datetime.present?
+      datetime.strftime '%Y-%m-%d %H:%M:%S'
+    end
+  end
 end

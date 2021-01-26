@@ -1,5 +1,5 @@
 <tr id="banner_<%= banner.id %>">
-  <td><%=image_tag banner.banner_attachment&.preview_url, style: 'width: 150px;height: 50px' %></td>
+  <td><%=image_tag banner.banner_attachment&.preview_url, style: 'width: 150px;height: 50px' , lazy: true%></td>
   <td ><%= banner.product&.no %></td>
   <td><%= banner.product&.name %></td>
   <td><%= banner.product&.price %></td>

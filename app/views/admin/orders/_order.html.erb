@@ -5,6 +5,7 @@
   <td><%= order.view_amount %></td>
   <td><%= order.get_status %></td>
   <td><%= order.admin&.name %></td>
+  <td><%= simple_datetime order.payment_at %></td>
   <td>
     <% if can? :orders, :view %>
         <%= link_to admin_order_path(order), class: "btn btn-success btn-xs", 'data-toggle' => "modal", 'data-target' => "#myModal" do %>

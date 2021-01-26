@@ -108,5 +108,5 @@ gem 'summernote-rails'
 gem 'font-awesome-rails'
 gem 'hashids'
 gem 'china_city'
-gem 'lazyloadjs'
+gem "lazyload-rails"
 
