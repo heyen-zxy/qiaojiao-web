@@ -3,6 +3,7 @@ class Product < ApplicationRecord
   validates :commission,  inclusion: {in: 1..9999999999 }, if: Proc.new { |product| product.commission.present? }
   has_many :norms
   after_create :set_product_no
+  belongs_to :category
 
 
   has_and_belongs_to_many :attachments, join_table: 'model_attachments', foreign_key:  :model_id, class_name: 'ProductAttachment', association_foreign_key: :attachment_id
@@ -64,8 +65,8 @@ class Product < ApplicationRecord
       if params[:product_type].present?
         products = products.where product_type: params[:product_type]
       end
-      if params[:name].present?
-        products = products.where('name like ? or no like ?', "%#{params[:name]}%", "%#{params[:name]}%")
+      if params[:table_search].present?
+        products = products.where('name like ? or no like ?', "%#{params[:table_search]}%", "%#{params[:table_search]}%")
       end
       products
     end

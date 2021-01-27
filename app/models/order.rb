@@ -85,19 +85,19 @@ class Order < ApplicationRecord
       STATUS.collect{|key, value| [value, key]}
     end
 
-    #{'user_id': 1, norm_array: [{id: 1, number: 2}, {id: 4, number: 1}]}
-    def save_orders params={}
-      user_id = params['user_id']
-      user = User.find_by id: user_id
-      order = user.orders.new address_id: params['addredd_id']
-      params['norm_array'].each do |norm_hash|
+    #{norm_array: [{id: 1, number: 2}, {id: 4, number: 1}]}
+    def save_orders user, params={}
+      order = user.orders.new address_id: params['address_id']
+      norm_array = JSON.parse params['norm_array']
+      norm_array ||= []
+      norm_array.each do |norm_hash|
         norm = Norm.joins(:product).where('norms.id': norm_hash['id'], 'products.status': 'on').first
         number = norm_hash['number']
         number ||= 1
         order_norm = OrderNorm.new norm: norm, product: norm.product, number: number, price: norm.price, amount: norm.price*number
         order.order_norms << order_norm
       end
-      order.save
+      order
     end
 
     def search_conn params={}

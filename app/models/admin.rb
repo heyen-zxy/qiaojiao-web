@@ -5,6 +5,7 @@ class Admin < ApplicationRecord
          :recoverable, :rememberable
   validates_presence_of :phone, :name
   validates_uniqueness_of :phone
+  has_one :user
 
   belongs_to :role, optional: true
 

@@ -63,22 +63,17 @@ end
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 gem 'devise'
-gem 'grape'
 gem 'mysql2'
 gem 'aasm'
 gem 'kaminari'   #分页
-gem 'grape-kaminari'
 gem 'config'
 gem 'ancestry'
-gem 'grape-entity'
 group :development do
   gem 'annotate'
   gem 'mina',                           '0.3.8'
 end
 gem 'jquery-rails'
-gem 'grape-swagger', '>= 0.32.1'
-gem 'grape-swagger-rails'
-gem 'grape-swagger-ui'
+
 gem "paranoia", "~> 2.2"
 gem 'qiniu', '~> 6.8.1'  #七牛云存储
 gem 'rack-cors', :require => 'rack/cors'
@@ -99,7 +94,6 @@ gem 'cancancan' # 组织架构树结构
 gem 'rails_admin_nestable',             '~> 0.3.2'            # railsadmin 树结构支持
 gem 'simple_form'                                             # form表单
 gem 'kaminari-bootstrap', '~> 3.0.1'                          # 分页 bootstrap样式
-gem 'china_city'
 gem 'active_importer'
 gem 'rest-client'
 gem 'jquery-slimscroll-rails'
@@ -109,4 +103,11 @@ gem 'font-awesome-rails'
 gem 'hashids'
 gem 'china_city'
 gem "lazyload-rails"
+
+gem 'grape'
+gem 'grape-kaminari'
+gem 'grape-entity'
+gem 'grape-swagger', '>= 0.32.1'
+gem 'grape-swagger-rails'
+
 

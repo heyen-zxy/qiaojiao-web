@@ -3,4 +3,12 @@
   <td><%= user.get_gender %></td>
   <td><%= user.phone %></td>
   <td><%= "#{user.country}#{user.province}#{user.city}" %></td>
+  <td><%= "#{user.admin&.name}-#{user.admin&.phone}" %></td>
+  <td>
+    <% if can? :users, :set_admin %>
+      <%= link_to admin_admin_user_path(user), class: "btn btn-primary btn-xs", 'data-toggle' => "modal", 'data-target' => "#myModal" do %>
+        <i class="fa fa-check"></i>绑定内部人员
+      <% end %>
+    <% end %>
+  </td>
 </tr>

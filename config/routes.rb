@@ -1,8 +1,11 @@
 Rails.application.routes.draw do
+  devise_for :users
+  mount ApplicationAPI => '/api'
+  mount GrapeSwaggerRails::Engine => '/apidoc'
   mount RailsAdmin::Engine => '/rails_admins', as: 'rails_admin'
   devise_for :admins, controllers: {
     sessions: 'admins/sessions'
-}
+  }
   root to: 'admin/products#index'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   namespace :admin, path: ""  do
@@ -15,7 +18,13 @@ Rails.application.routes.draw do
         post :set_desc
       end
     end
-    resources :users
+    resources :users do
+      member do
+        get :admin
+        post :set_admin
+      end
+    end
+
     resources :products do
       collection do
         post :change_status
@@ -35,4 +44,5 @@ Rails.application.routes.draw do
       end
     end
   end
+
 end
