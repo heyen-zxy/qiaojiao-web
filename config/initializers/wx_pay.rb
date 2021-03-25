@@ -7,6 +7,6 @@ WxPay.appid = Settings.appid #appid
 #WxPay.set_apiclient_by_pkcs12(File.read(pkcs12_filepath), pass)
 
 WxPay.extra_rest_client_options = {timeout: 2, open_timeout: 3}
-if Rails.env.production?
-  WxPay.set_apiclient_by_pkcs12(File.read("apiclient_cert.p12"), WxPay.mch_id)
-end
+# if Rails.env.production?
+#   WxPay.set_apiclient_by_pkcs12(File.read("apiclient_cert.p12"), WxPay.mch_id)
+# end
