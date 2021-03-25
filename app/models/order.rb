@@ -49,6 +49,10 @@ class Order < ApplicationRecord
 
   end
 
+  def self.stat
+    
+  end
+
   def get_status
     Order::STATUS[self.status.to_sym]
   end

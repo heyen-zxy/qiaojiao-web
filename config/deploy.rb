@@ -25,7 +25,7 @@ task :environment do
 # Be sure to commit your .ruby-version or .rbenv-version to your repository.
 # invoke :'rbenv:load'
 # For those using RVM, use this to load an RVM version@gemset.
-  invoke :'rvm:use[ruby-2.3.1]' #设置rvm ruby版本
+  invoke :'rvm:use[ruby-2.5.1]' #设置rvm ruby版本
 end
 
 # 中括号里的文件 会出现在服务器项目附录的shared文件夹中，这里加入了secrets.yml，环境密钥无需跟开发计算机一样
