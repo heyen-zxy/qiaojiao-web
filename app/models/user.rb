@@ -16,6 +16,17 @@ class User < ApplicationRecord
     end
   end
 
+  def set_user_info user_info
+    self.nick_name = user_info['nickName']
+    self.gender = user_info['gender']
+    self.city = user_info['city']
+    self.province = user_info['province']
+    self.country = user_info['country']
+    self.avatar_url = user_info['avatarUrl']
+    self.save
+    self
+  end
+
   class << self
     def search_conn params
       users = self.all
@@ -25,36 +36,28 @@ class User < ApplicationRecord
       users
     end
 
-    def init_by_web_code code, type
-      res = Wechat.api(type).web_access_token code
-      if res && res['openid']
-        init_by_web_session res['access_token'], res['openid'], type
-      end
+    def get_session code
+      RestClient.get "https://api.weixin.qq.com/sns/jscode2session?appid=#{Wechat.api.access_token.appid}&secret=#{Wechat.api.access_token.secret}&js_code=#{code}&grant_type=authorization_code"
     end
 
-    def init_by_web_session access_token, openid, type
-      user_info = Wechat.api(type).web_userinfo access_token, openid
-      if user_info['unionid']
-        user = User.find_or_initialize_by unionid: user_info['unionid']
-        if type.to_s == 'default'
-          user.web_session_token = access_token
-          user.web_openid = user_info['openid']
-        end
-
-        if type.to_s == 'app'
-          user.app_session_token = access_token
-          user.app_openid = user_info['openid']
-        end
-
-        user.nick_name = user_info['nickname']
-        user.gender = user_info['sex']
-        user.city = user_info['city']
-        user.province = user_info['province']
-        user.country = user_info['country']
-        user.avatar_url = user_info['headimgurl']
-        user.save
+    def init_by_web_code code
+      res = JSON.parse get_session(code).body
+      if res && res['openid']
+        user = User.find_or_initialize_by open_id: res['openid']
+        user.authentication_token ||= generate_authentication_token
+        user.share_token ||= SecureRandom.uuid
+        user.update session_token: res['session_key']
         user
       end
+    end
+  end
+
+  private
+
+  def self.generate_authentication_token
+    loop do
+      token = Devise.friendly_token
+      break token unless User.where(authentication_token: token).first
     end
   end
 end

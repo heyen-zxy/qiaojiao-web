@@ -93,7 +93,8 @@ zh-CN:
         product_type: '类型'
         category_id: '分类'
         status: '状态'
-        commission: '佣金'
+        commission: '个人佣金'
+        high_commission: '店铺佣金'
       report:
         project_id: '项目名'
         name: '工程名'
@@ -143,6 +144,9 @@ zh-CN:
         payment_at: '发货时间'
       company:
         name: '公司名'
+        user_name: '法人姓名'
+        phone: '电话'
+        address: '地址'
       category:
         name: '项目类型'
       product_category:
@@ -150,6 +154,7 @@ zh-CN:
       factory:
         name: '厂商名'
         address: '厂商地址'
+
 
 
 

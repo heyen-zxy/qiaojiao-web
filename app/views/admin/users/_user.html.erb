@@ -7,7 +7,13 @@
   <td>
     <% if can? :users, :set_admin %>
       <%= link_to admin_admin_user_path(user), class: "btn btn-primary btn-xs", 'data-toggle' => "modal", 'data-target' => "#myModal" do %>
-        <i class="fa fa-check"></i>绑定内部人员
+        绑定内部人员
+      <% end %>
+    <% end %>
+
+    <% if can? :users, :set_company %>
+      <%= link_to company_admin_user_url(user), class: "btn btn-success btn-xs", 'data-toggle' => "modal", 'data-target' => "#myModal" do %>
+        绑定商户
       <% end %>
     <% end %>
   </td>

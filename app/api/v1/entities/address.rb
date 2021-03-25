@@ -9,6 +9,10 @@ module V1
       expose :phone
       expose :address_code
       expose :address_name
+      expose :default
+      expose :places
+      expose :address_type
+      expose :show_address_type
       expose :desc
       expose :user, using: V1::Entities::User
       with_options(format_with: :timestamp) do

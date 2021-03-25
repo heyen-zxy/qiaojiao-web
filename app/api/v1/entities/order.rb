@@ -9,6 +9,7 @@ module V1
       expose :address, using: V1::Entities::Address
       expose :status
       expose :get_status
+      expose :view_amount
       with_options(format_with: :timestamp) do
         expose :payment_at, documentation: { type: 'Timestamp' }
         expose :created_at, documentation: { type: 'Timestamp' }

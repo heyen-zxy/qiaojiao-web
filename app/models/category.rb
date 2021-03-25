@@ -1,5 +1,12 @@
 class Category < ApplicationRecord
+  has_many :products
   has_ancestry
+
+  default_scope {order('sort_num desc')}
+
+  def on_products
+    products.on
+  end
 
   class << self
     def select_options

@@ -5,7 +5,7 @@ module V1
       expose :id
       expose :priority
       expose :product_id
-      expose :attachment, using: V1::Entities::Attachment
+      expose :banner_attachment, using: V1::Entities::Attachment
       with_options(format_with: :timestamp) do
         expose :created_at, documentation: { type: 'Timestamp' }
         expose :updated_at, documentation: { type: 'Timestamp' }

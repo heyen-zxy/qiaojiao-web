@@ -26,7 +26,32 @@
         <div class="col-md-6 form-group">
           <%= f.input :commission, as: :float, input_html: {value: @product.view_commission} %>
         </div>
+        <div class="col-md-6 form-group">
+          <%= f.input :high_commission, as: :float, input_html: {value: @product.view_high_commission} %>
+        </div>
       </div>
+      <div class="row">
+
+        <div class="col-md-6 form-group">
+          <div class=" string optional service_images form-inline">
+            <label class="form-control-label string optional col-form-label select_image_ids required" style="display: inline" for="service_images">商品主图<abbr title="required">*</abbr></label>
+
+            <input style="display:none" class="form-control string optional select_main_attachment_id" type="text" name="main_attachment_id" id="select_main_attachment_id" value="<%= @product.main_attachment_id %>">
+            <%= link_to '选择图片', admin_attachments_path(main: 1), class: 'btn btn-primary btn-sm', 'data-toggle' => "modal", 'data-target' => "#file-modal" %>
+            <% if @product.errors[:main_attachment_id].present? %>
+              <div class="invalid-feedback" style="display: inline">图片<%= @product.errors[:main_attachment_id].first %></div>
+            <% end %>
+          </div>
+          <div class="form-group string optional service_images form-inline">
+            <div id="select_main_attachment" class="row lightGallery image_select_group">
+              <% if @product.main_attachment.present? %>
+                <div class="col-md-3"><img src="<%= @product.main_attachment.preview_url %>" style="width: 100px; height:100px;" ></div>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div class="row">
 
         <div class="col-md-6 form-group">

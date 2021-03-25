@@ -5,7 +5,7 @@ module V1
       def current_user
         #p env["HTTP_X_USER_ACCESS_TOKEN"], 1111111
         @current_user ||= request.headers['X-Auth-Token'].nil? ? nil : User.find_by_authentication_token(request.headers['X-Auth-Token'])
-        @current_user ||= User.first if Rails.env == 'development'
+        # @current_user ||= User.first if Rails.env == 'development'
       end
 
       def authenticate!

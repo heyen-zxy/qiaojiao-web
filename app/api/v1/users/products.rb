@@ -10,19 +10,23 @@ module V1
           optional :page,     type: Integer, default: 1, desc: '页码'
           optional :per_page, type: Integer, desc: '每页数据个数', default: 10
           optional :product_type, type: String, desc: '类型 good service'
-          optional :category_id, type: Integer, desc: '分类'
-          optional :sort, type: String, desc: '排序'
           optional :table_search, type: String, desc: '检索'
+          optional :low_price, type: Float, desc: '最低价格'
+          optional :high_price, type: Float, desc: '最高价格'
+          optional :norm_id, type: Integer, desc: '规格id'
         end
         get '/' do
+          params[:category_id] = JSON.parse params[:category_ids] if params[:category_ids].present?
           products = Product.on.search_conn(params)
-          present paginate(products), with: V1::Entities::Product
+          present paginate(products), with: V1::Entities::Product, user: @current_user
         end
+
+        desc '根据norm_id'
 
         desc '推荐商品'
         get 'recommend' do
           products = Product.on.order('sale asc').last(20).sample(10)
-          present products, with: V1::Entities::Product
+          present products, with: V1::Entities::Product, user: @current_user
         end
 
         route_param :id do
@@ -33,7 +37,7 @@ module V1
 
           desc '商品详情'
           get '/' do
-            present @product, with: V1::Entities::Product
+            present @product, with: V1::Entities::Product, user: @current_user
           end
         end
       end

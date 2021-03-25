@@ -1,5 +1,5 @@
 class Admin::UsersController < Admin::BaseController
-  before_action :set_user, only: [:admin, :set_admin]
+  before_action :set_user, only: [:admin, :set_admin, :company, :set_company]
 
   def index
     @users = User.search_conn(params).order('updated_at desc').page(params[:page]).per(20)
@@ -9,8 +9,16 @@ class Admin::UsersController < Admin::BaseController
     render layout: false
   end
 
+  def company
+    render layout: false
+  end
+
   def set_admin
     @user.update admin_id: params[:admin_id]
+  end
+
+  def set_company
+    @user.update company_id: params[:company_id]
   end
 
   private

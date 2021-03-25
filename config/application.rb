@@ -30,5 +30,12 @@ module QiaojiangWeb
     config.eager_load_paths += %W(#{Rails.root.join}/lib)
     config.time_zone = 'Beijing'
     config.active_record.default_timezone = :local
+
+    config.middleware.insert_before 0, Rack::Cors do
+      allow do
+        origins '*'
+        resource '*', :headers => :any, :methods => [:get, :post, :options]
+      end
+    end
   end
 end

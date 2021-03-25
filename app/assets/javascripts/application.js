@@ -137,24 +137,36 @@ function hideSpinner() {
   $("#spinner").removeClass("spinner");
 }
 
-function selectImage(e){
-  if($(e).hasClass('selected')){
-    $(e).removeClass('selected')
-  }else{
+function selectImage(e, single){
+  if(single){
+    $('.attachments-list .select_image').removeClass('selected')
     $(e).addClass('selected')
+  }else{
+    if($(e).hasClass('selected')){
+      $(e).removeClass('selected')
+    }else{
+      $(e).addClass('selected')
+    }
   }
+
 }
 
-function selectedImages(){
-  var selectIds = []
-  $('#select_attachments').html('');
-  $('img.selected').each(function(e){
-    selectIds.push($(this).attr('file_id'));
-    $('#select_attachments').append('<div class="col-md-3"><img src="' + $(this).attr('src') + '" style="width: 100px; height:100px;" ></div>');
-  });
-  console.log(selectIds)
-  $('#select_attachment_ids').val(selectIds);
-
+function selectedImages(single){
+  if(single){
+    if($('img.selected').attr('file_id')){
+      $('#select_main_attachment').html('<div class="col-md-3"><img src="' + $('img.selected').attr('src') + '" style="width: 100px; height:100px;" ></div>');
+      $('#select_main_attachment_id').val($('img.selected').attr('file_id'));
+    }
+  }else{
+    var selectIds = []
+    $('#select_attachments').html('');
+    $('img.selected').each(function(e){
+      selectIds.push($(this).attr('file_id'));
+      $('#select_attachments').append('<div class="col-md-3"><img src="' + $(this).attr('src') + '" style="width: 100px; height:100px;" ></div>');
+    });
+    console.log(selectIds)
+    $('#select_attachment_ids').val(selectIds);
+  }
   $('#file-modal').modal('hide')
 }
 

@@ -1,14 +1,14 @@
 module V1
   module Entities
-    class Category < Grape::Entity
+    class CategoryProduct < Grape::Entity
       format_with(:timestamp) { |dt| dt.try :strftime, '%Y-%m-%d %H:%M:%S' }
       #format_with(:parent) { |dt| instance.parent.name }
       expose :id
       expose :name
-      expose :parent_id
 
       # product_category 是在rails的model中定义的关联，在这里可以直接用
-      expose :parent, using: V1::Entities::Category
+      #expose :parent, using: V1::Entities::Category
+      expose :on_products, using: V1::Entities::Product
 
       with_options(format_with: :timestamp) do
         expose :created_at

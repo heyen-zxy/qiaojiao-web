@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_01_27_085603) do
+ActiveRecord::Schema.define(version: 2021_03_25_063600) do
 
   create_table "addresses", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "address_code"
@@ -20,6 +20,8 @@ ActiveRecord::Schema.define(version: 2021_01_27_085603) do
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "address_type", default: 0
+    t.boolean "default", default: false
   end
 
   create_table "admins", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -58,6 +60,16 @@ ActiveRecord::Schema.define(version: 2021_01_27_085603) do
   create_table "categories", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name"
     t.string "ancestry"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "sort_num", default: 0
+  end
+
+  create_table "companies", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "name"
+    t.string "user_name"
+    t.string "phone"
+    t.string "address"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -103,6 +115,7 @@ ActiveRecord::Schema.define(version: 2021_01_27_085603) do
     t.datetime "server_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "share_user_id"
   end
 
   create_table "payment_logs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -136,6 +149,8 @@ ActiveRecord::Schema.define(version: 2021_01_27_085603) do
     t.datetime "updated_at", null: false
     t.string "no"
     t.integer "amount", default: 0
+    t.integer "main_attachment_id"
+    t.integer "high_commission"
   end
 
   create_table "resources", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -198,6 +213,8 @@ ActiveRecord::Schema.define(version: 2021_01_27_085603) do
     t.datetime "remember_created_at"
     t.datetime "last_active_at"
     t.integer "admin_id"
+    t.string "share_token"
+    t.integer "company_id"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 

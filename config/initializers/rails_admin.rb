@@ -31,7 +31,7 @@ RailsAdmin.config do |config|
   config.forgery_protection_settings = {with: :null_session}
 
   config.main_app_name = ["巧匠", "优家"]
-  config.included_models = ["Resource", 'Role', 'Category', 'Admin']
+  config.included_models = ["Resource", 'Role', 'Category', 'Admin', 'Company']
 
   config.model 'Admin' do
     label_plural "公司人员"
@@ -50,10 +50,33 @@ RailsAdmin.config do |config|
     end
   end
 
+  config.model 'Company' do
+    label_plural "入驻商户"
+    field :name do
+      label '商户名'
+    end
+    field :user_name do
+      label '法人'
+    end
+    field :phone do
+      label '电话号码'
+    end
+    field :address do
+      label '地址'
+    end
+
+  end
+
   config.model 'Category' do
     label_plural "分类"
     field :name do
       label '分类名'
+    end
+    field :sort_num do
+      label '排序（从大到小）'
+    end
+    list do
+      sort_by 'sort_num'
     end
     nestable_tree({
                       live_update: :only

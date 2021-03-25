@@ -2,7 +2,7 @@ class Admin::ProductsController < Admin::BaseController
   before_action :set_product, only: [:edit, :update, :change_status]
   def index
     params[:status] ||= 'on'
-    @products = Product.search_conn(params).order('updated_at desc').page(params[:page]).per(20)
+    @products = Product.search_conn(params).order('products.updated_at desc').page(params[:page]).per(20)
   end
 
   def new
@@ -23,8 +23,10 @@ class Admin::ProductsController < Admin::BaseController
     end
 
     @product.norms = norms
+    @product.main_attachment_id = params[:main_attachment_id]
     @product.attachment_ids = params[:attachment_ids].split(',')
     @product.commission = params[:product][:commission].to_f * 100 if params[:product][:commission].present?
+    @product.high_commission = params[:product][:high_commission].to_f * 100 if params[:product][:high_commission].present?
     if @product.update product_permit
       redirect_to admin_products_path, notice: '变更成功'
     else
@@ -61,8 +63,10 @@ class Admin::ProductsController < Admin::BaseController
       end
     end
     @product.norms = norms
+    @product.main_attachment_id = params[:main_attachment_id]
     @product.attachment_ids = params[:attachment_ids].split(',')
     @product.commission = params[:product][:commission].to_f * 100 if params[:product][:commission].present?
+    @product.high_commission = params[:product][:high_commission].to_f * 100 if params[:product][:high_commission].present?
     if @product.update product_permit
       redirect_to admin_products_path, notice: '添加成功'
     else

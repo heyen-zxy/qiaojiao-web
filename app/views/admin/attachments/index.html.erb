@@ -7,7 +7,7 @@
   <div class="row">
     <div class="col-md-3">
       <a class="btn btn-primary btn-block margin-bottom" id="bond" href="javascript:void(0)" >
-        <i class="fa fa-plus"></i><span>上传图片</span></a>
+        <i class="fa fa-plus"></i><selectImagespan>上传图片</selectImagespan></a>
 
       <div class="box box-solid">
         <div class="box-header with-border">
@@ -29,7 +29,7 @@
         <% @product_attachments.each do |file| %>
           <% if file.preview_url.present? %>
             <div class="col-sm-3">
-              <%= image_tag file.preview_url, style: "width: 140px; height:140px;", class: "select_image", onclick: "selectImage(this)", file_id: file.id %>
+              <%= image_tag file.preview_url, style: "width: 140px; height:140px;", class: "select_image", onclick: "selectImage(this, #{params[:main].to_i})", file_id: file.id %>
             </div>
           <% end %>
         <% end %>
@@ -41,7 +41,7 @@
 </div>
 <div class="modal-footer">
   <button type="button" class="btn btn-default pull-left" data-dismiss="modal">关闭</button>
-  <button type="button" class="btn btn-primary" onclick="selectedImages()">确认</button>
+  <button type="button" class="btn btn-primary" onclick="selectedImages(<%= params[:main].to_i %>)">确认</button>
 </div>
 
 

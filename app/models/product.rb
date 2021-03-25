@@ -1,10 +1,11 @@
 class Product < ApplicationRecord
-  validates_presence_of :name, :category_id, :product_type, :status, :attachments, :norms
+  validates_presence_of :name, :category_id, :product_type, :status, :attachments, :norms, :main_attachment_id
   validates :commission,  inclusion: {in: 1..9999999999 }, if: Proc.new { |product| product.commission.present? }
   has_many :norms
   after_create :set_product_no
   belongs_to :category
 
+  belongs_to :main_attachment, foreign_key: :main_attachment_id, class_name: 'ProductAttachment', optional: true
 
   has_and_belongs_to_many :attachments, join_table: 'model_attachments', foreign_key:  :model_id, class_name: 'ProductAttachment', association_foreign_key: :attachment_id
   enum status: {
@@ -19,6 +20,16 @@ class Product < ApplicationRecord
 
   def view_commission
     commission.to_f / 100
+  end
+
+  def view_high_commission
+    high_commission.to_f / 100
+  end
+
+  def user_commission user
+    if user.present?
+
+    end
   end
 
   def get_status
@@ -37,7 +48,7 @@ class Product < ApplicationRecord
   def price
     prices = norms.collect{|norm| norm.view_price}
     if prices.size > 1
-      "#{prices.min} ~ #{prices.max}"
+      "#{prices.min}~#{prices.max}"
     else
       prices.first
     end
@@ -55,19 +66,30 @@ class Product < ApplicationRecord
 
   class << self
     def search_conn params
-      products = self.all
+      products = self.includes(:norms).references :all
       if params[:status].present?
         products = products.where status: params[:status]
       end
       if params[:category_id].present?
+        p params[:category_id], 11111
         products = products.where category_id: params[:category_id]
       end
       if params[:product_type].present?
         products = products.where product_type: params[:product_type]
       end
       if params[:table_search].present?
-        products = products.where('name like ? or no like ?', "%#{params[:table_search]}%", "%#{params[:table_search]}%")
+        products = products.where('products.name like ? or no like ?', "%#{params[:table_search]}%", "%#{params[:table_search]}%")
       end
+      if params[:low_price].present?
+        products = products.where('norms.price >= ?', params[:low_price] * 100)
+      end
+      if params[:high_price].present?
+        products = products.where('norms.price <= ?', params[:high_price] * 100)
+      end
+      if params[:norm_id].present?
+        products = products.where('norms.id': params[:norm_id])
+      end
+
       products
     end
 

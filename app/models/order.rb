@@ -1,7 +1,8 @@
 class Order < ApplicationRecord
   include AASM
   belongs_to :user
-  belongs_to :address
+  belongs_to :share_user, class_name: 'User', optional: true
+  belongs_to :address, optional: true
   belongs_to :admin, optional: true
   has_and_belongs_to_many :norms, join_table: 'order_norms'
   has_many :order_norms
@@ -87,7 +88,12 @@ class Order < ApplicationRecord
 
     #{norm_array: [{id: 1, number: 2}, {id: 4, number: 1}]}
     def save_orders user, params={}
-      order = user.orders.new address_id: params['address_id']
+      order = user.orders.new
+      from_token = params['from_token']
+      if from_token.present?
+        share_user = User.find_by(share_token: from_token)
+      end
+      order.share_user = share_user
       norm_array = JSON.parse params['norm_array']
       norm_array ||= []
       norm_array.each do |norm_hash|
@@ -97,6 +103,9 @@ class Order < ApplicationRecord
         order_norm = OrderNorm.new norm: norm, product: norm.product, number: number, price: norm.price, amount: norm.price*number
         order.order_norms << order_norm
       end
+      order.valid?
+      p order.errors, 111
+      order.save
       order
     end
 

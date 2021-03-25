@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resource :wechat, only: [:show, :create]
   devise_for :users
   mount ApplicationAPI => '/api'
   mount GrapeSwaggerRails::Engine => '/apidoc'
@@ -20,8 +21,10 @@ Rails.application.routes.draw do
     end
     resources :users do
       member do
+        get :company
         get :admin
         post :set_admin
+        post :set_company
       end
     end
 
