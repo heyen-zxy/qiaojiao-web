@@ -5,6 +5,8 @@ class Product < ApplicationRecord
   after_create :set_product_no
   belongs_to :category
 
+  acts_as_paranoid
+
   belongs_to :main_attachment, foreign_key: :main_attachment_id, class_name: 'ProductAttachment', optional: true
 
   has_and_belongs_to_many :attachments, join_table: 'model_attachments', foreign_key:  :model_id, class_name: 'ProductAttachment', association_foreign_key: :attachment_id
@@ -18,18 +20,37 @@ class Product < ApplicationRecord
       service: '服务'
   }
 
+  def user_commission user
+    if user.admin.present?
+      if high_commission.to_i > 0
+        high_commission.to_i
+      else
+        commission.to_i
+      end
+    else
+      commission.to_i
+    end
+  end
+
+  def view_user_commission user
+    comm = if user.admin.present?
+      if high_commission.to_i > 0
+        high_commission.to_i
+      else
+        commission.to_i
+      end
+    else
+      commission.to_i
+           end
+    comm / 100.0
+  end
+
   def view_commission
     commission.to_f / 100
   end
 
   def view_high_commission
     high_commission.to_f / 100
-  end
-
-  def user_commission user
-    if user.present?
-
-    end
   end
 
   def get_status

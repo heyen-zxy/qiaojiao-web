@@ -6,6 +6,9 @@ class Admin < ApplicationRecord
   validates_presence_of :phone, :name
   validates_uniqueness_of :phone
   has_one :user
+  has_many :orders
+
+  acts_as_paranoid
 
   belongs_to :role, optional: true
 

@@ -1,5 +1,6 @@
 class Order < ApplicationRecord
   include AASM
+  acts_as_paranoid
   belongs_to :user
   belongs_to :share_user, class_name: 'User', optional: true
   belongs_to :address, optional: true
@@ -7,10 +8,13 @@ class Order < ApplicationRecord
   has_and_belongs_to_many :norms, join_table: 'order_norms'
   has_many :order_norms
   after_create :set_no, :set_amount
-  STATUS = { wait: '待付款', paid: '已支付', server: '已完成', cancel: '已取消'}
+  has_many :payments
+  belongs_to :commission_log, optional: true
+  has_and_belongs_to_many :attachments, join_table: 'model_attachments', foreign_key:  :model_id, class_name: 'ServerAttachment', association_foreign_key: :attachment_id
+  STATUS = { wait: '待付款', paid: '已支付', served: '已完成', cancel: '已取消'}
   aasm :status do
     state :wait, :initial => true
-    state :paid, :server, :cancel
+    state :paid, :served, :cancel
 
     #支付
     event :do_pay do
@@ -24,7 +28,7 @@ class Order < ApplicationRecord
 
     #收货
     event :do_server do
-      transitions :from => :paid, :to => :served, after: Proc.new{set_server_at}
+      transitions :from => :paid, :to => :served, after: Proc.new{do_after_server}
     end
 
       # #收货
@@ -49,8 +53,11 @@ class Order < ApplicationRecord
 
   end
 
+  def current_payment
+    payments.last
+  end
+
   def self.stat
-    
   end
 
   def get_status
@@ -69,6 +76,10 @@ class Order < ApplicationRecord
     amount.to_f / 100
   end
 
+  def view_commission
+    commission.to_f / 100
+  end
+
 
   def after_pay
     self.update payment_at: DateTime.now
@@ -78,6 +89,23 @@ class Order < ApplicationRecord
   def set_sale
     self.order_norms.each do |order_norm|
       order_norm.product.set_sale order_norm.number, order_norm.amount
+    end
+  end
+
+  def do_after_server
+    set_server_at
+    set_commission
+  end
+
+  def set_commission
+    amount = 0
+    if self.share_user.present?
+      order_norms.each do |order_norm|
+        amount += order_norm.product.user_commission(self.share_user) * order_norm.number if order_norm.price >= 200
+      end
+    end
+    if amount > 0
+      self.update commission: amount
     end
   end
 
@@ -108,7 +136,6 @@ class Order < ApplicationRecord
         order.order_norms << order_norm
       end
       order.valid?
-      p order.errors, 111
       order.save
       order
     end

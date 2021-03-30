@@ -10,6 +10,9 @@ module V1
       expose :status
       expose :get_status
       expose :view_amount
+      expose :desc
+      expose :view_commission
+      expose :attachments, using: V1::Entities::Attachment
       with_options(format_with: :timestamp) do
         expose :payment_at, documentation: { type: 'Timestamp' }
         expose :created_at, documentation: { type: 'Timestamp' }

@@ -6,6 +6,8 @@ class User < ApplicationRecord
   has_many :orders
   has_many :addresses
   belongs_to :admin, optional: true
+  has_many :share_orders, class_name: 'Order', foreign_key: :share_user_id
+  acts_as_paranoid
 
   def get_gender
     case gender
@@ -25,6 +27,34 @@ class User < ApplicationRecord
     self.avatar_url = user_info['avatarUrl']
     self.save
     self
+  end
+
+  def commissions
+    share_orders.where(status: 'served').sum :commission
+  end
+
+  def wait_orders
+    share_orders.left_joins(:commission_log).where(status: 'served').where('commission_log_id is null or commission_logs.status = ?', 'wait')
+  end
+
+  def wait_commissions
+    wait_orders.sum :commission
+  end
+
+  def share_order_with_status status
+    if status == 'paid'
+      paid_orders
+    else
+      wait_orders
+    end
+  end
+
+  def paid_orders
+    share_orders.left_joins(:commission_log).where(status: 'served',).where('commission_logs.status = ?', 'paid')
+  end
+
+  def paid_commissions
+    paid_orders.sum :commission
   end
 
   class << self

@@ -13,7 +13,9 @@ module V1
       expose :amount
       expose :view_commission do |instance, options|
         if options[:user].present?
-          instance.user_commission options[:user]
+          instance.view_user_commission options[:user]
+        else
+          0
         end
       end
       expose :desc do |instance, options|
@@ -24,6 +26,7 @@ module V1
       expose :category, using: V1::Entities::Category
       expose :norms, using: V1::Entities::Norm
       expose :attachments, using: V1::Entities::Attachment
+      expose :main_attachment, using: V1::Entities::Attachment
 
       with_options(format_with: :timestamp) do
         expose :created_at

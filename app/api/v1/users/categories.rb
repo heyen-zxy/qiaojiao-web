@@ -17,7 +17,7 @@ module V1
 
           desc '分类商品'
           get 'products' do
-            present @category.children, with: V1::Entities::CategoryProduct
+            present @category.children.includes(:products).where('products.id is not null').references(:all), with: V1::Entities::CategoryProduct
           end
         end
       end

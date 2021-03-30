@@ -42,6 +42,33 @@ module V1
           present @current_user, with: V1::Entities::User
         end
 
+        desc '个人数据', headers: {
+            "X-Auth-Token" => {
+                description: "登录token",
+                required: false
+            }
+        }
+        get 'my' do
+          data = {
+              wait_order: @current_user.orders.where(status: 'wait').size,
+              paid_order: @current_user.orders.where(status: 'paid').size,
+              served_order: @current_user.orders.where(status: 'served').size,
+              share_order: @current_user.share_orders.size,
+              commission: @current_user.commissions.to_i / 100.0,
+              commission_wait: @current_user.wait_commissions.to_i / 100.0,
+              commission_paid: @current_user.paid_commissions.to_i / 100.0
+          }
+          if @current_user.admin.present?
+            data.merge!({
+                           admin_server_order: @current_user.admin.orders.size,
+                           admin_wait_server_order: @current_user.admin.orders.where(status: 'paid').size,
+                           admin_served_order: @current_user.admin.orders.where(status: 'served').size
+                       })
+          end
+          data
+        end
+
+
         desc '我的订单', headers: {
             "X-Auth-Token" => {
                 description: "登录token",
@@ -51,9 +78,14 @@ module V1
         params do
           optional :page,     type: Integer, default: 1, desc: '页码'
           optional :per_page, type: Integer, desc: '每页数据个数', default: 10
+          optional :status,     type: String, desc: '状态'
         end
         get 'orders' do
-          present paginate(@current_user.orders), with: V1::Entities::Order
+          orders = @current_user.orders.order('updated_at desc')
+          if params[:status].present?
+            orders = orders.where(status: params[:status])
+          end
+          present paginate(orders), with: V1::Entities::Order
         end
 
         desc '我负责的订单', headers: {
@@ -65,10 +97,35 @@ module V1
         params do
           optional :page,     type: Integer, default: 1, desc: '页码'
           optional :per_page, type: Integer, desc: '每页数据个数', default: 10
+          optional :status,     type: String, desc: '状态'
+
         end
         get 'server_orders' do
           if @current_user.admin.present?
-            present paginate(@current_user.admin.orders), with: V1::Entities::Order
+            orders = @current_user.admin.orders.order('updated_at desc')
+            if params[:status].present?
+              orders = orders.where(status: params[:status])
+            end
+            present paginate(orders), with: V1::Entities::Order
+          end
+        end
+
+        desc '我分享的订单', headers: {
+            "X-Auth-Token" => {
+                description: "登录token",
+                required: false
+            }
+        }
+        params do
+          optional :page,     type: Integer, default: 1, desc: '页码'
+          optional :per_page, type: Integer, desc: '每页数据个数', default: 10
+          optional :status,     type: String, desc: '状态'
+
+        end
+        get 'share_orders' do
+          if @current_user.admin.present?
+            orders = @current_user.share_order_with_status(params[:status]).order('updated_at desc')
+            present paginate(orders), with: V1::Entities::Order, user: @current_user
           end
         end
 

@@ -10,6 +10,7 @@ module V1
       expose :avatar_url do |instance, options|
         instance.avatar_url
       end
+      expose :admin_id
       expose :nick_name
       expose :gender
       # product_category 是在rails的model中定义的关联，在这里可以直接用
