@@ -30,7 +30,7 @@ RailsAdmin.config do |config|
 
   config.forgery_protection_settings = {with: :null_session}
 
-  config.main_app_name = ["巧匠", "优家"]
+  config.main_app_name = ["佳匠", "服务"]
   config.included_models = ["Resource", 'Role', 'Category', 'Admin', 'Company']
 
   config.model 'Admin' do

@@ -5,6 +5,10 @@ module V1
       include Grape::Kaminari
 
       resources 'products' do
+        before do
+          current_user
+        end
+
         desc '商品列表'
         params do
           optional :page,     type: Integer, default: 1, desc: '页码'

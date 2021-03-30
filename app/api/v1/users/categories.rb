@@ -1,12 +1,15 @@
 module V1
   module Users
     class Categories < Grape::API
+      helpers V1::Users::UserLoginHelper
       resources 'categories' do
-
+        before do
+          current_user
+        end
         desc '分类列表'
         get '/' do
-          categories = Category.roots.order('updated_at desc')
-          present categories, with: V1::Entities::CategoryTree
+          categories = Category.where.not(ancestry: nil).order('updated_at desc')
+          present categories, with: V1::Entities::Category
         end
 
         route_param :id do
@@ -17,7 +20,8 @@ module V1
 
           desc '分类商品'
           get 'products' do
-            present @category.children.includes(:products).where('products.id is not null').references(:all), with: V1::Entities::CategoryProduct
+            p @current_user, 11111
+            present @category.products, with: V1::Entities::Product, user: @current_user
           end
         end
       end
