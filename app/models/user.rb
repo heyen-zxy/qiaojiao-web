@@ -61,9 +61,12 @@ class User < ApplicationRecord
   def wx_qrcode
     qrcode_path = "public/qrcode/#{self.id}.jpg"
     unless File.exist? qrcode_path
+      unless File::directory? 'public/qrcode'
+        Dir.mkdir("public/qrcode")
+      end
       buffer = Wechat.api.wxa_get_wxacode_unlimit "share_token=#{self.id}"
       image_base64 = Base64.encode64(File.read(buffer))
-      File.open qrcode_path, 'w:ASCII-8BIT:utf-8' do |file|
+      File.open qrcode_path, 'w+:ASCII-8BIT:utf-8' do |file|
         file.write Base64.decode64(image_base64)
       end
     end

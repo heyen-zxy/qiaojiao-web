@@ -23,6 +23,7 @@ Rails.application.routes.draw do
       member do
         get :company
         get :admin
+        get :qrcode
         post :set_admin
         post :set_company
       end

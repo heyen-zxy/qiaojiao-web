@@ -1,5 +1,5 @@
 <tr id="user_<%= user.id %>">
-  <td><%= image_tag user.avatar_url, alt: '头像' , style: 'width: 25px;margin-right: 10px'%><%= user.nick_name %></td>
+  <td><%= image_tag user.avatar_url, alt: '头像' , style: 'width: 25px;margin-right: 10px' if user.avatar_url.present?%><%= user.nick_name %></td>
   <td><%= user.get_gender %></td>
   <td><%= user.phone %></td>
   <td><%= "#{user.country}#{user.province}#{user.city}" %></td>
@@ -15,6 +15,12 @@
     <% if can? :users, :set_company %>
       <%= link_to company_admin_user_url(user), class: "btn btn-success btn-xs", 'data-toggle' => "modal", 'data-target' => "#myModal" do %>
         绑定商户
+      <% end %>
+    <% end %>
+
+    <% if can?(:users, :qrcode) && user.company.present? %>
+      <%= link_to qrcode_admin_user_url(user), class: "btn btn-warning  btn-xs", 'data-toggle' => "modal", 'data-target' => "#myModal" do %>
+        商户二维码
       <% end %>
     <% end %>
   </td>

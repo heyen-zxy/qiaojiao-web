@@ -29,7 +29,7 @@
         <% @product_attachments.each do |file| %>
           <% if file.preview_url.present? %>
             <div class="col-sm-3">
-              <%= image_tag file.preview_url, style: "width: 140px; height:140px;", class: "select_image", onclick: "selectImage(this, #{params[:main].to_i})", file_id: file.id %>
+              <%= image_tag file.preview_url, lazy: true, style: "width: 140px; height:140px;", class: "select_image", onclick: "selectImage(this, #{params[:main].to_i})", file_id: file.id %>
             </div>
           <% end %>
         <% end %>

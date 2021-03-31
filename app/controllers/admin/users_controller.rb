@@ -1,5 +1,5 @@
 class Admin::UsersController < Admin::BaseController
-  before_action :set_user, only: [:admin, :set_admin, :company, :set_company]
+  before_action :set_user, only: [:admin, :set_admin, :company, :set_company, :qrcode]
 
   def index
     @users = User.search_conn(params).order('updated_at desc').page(params[:page]).per(20)
@@ -19,6 +19,10 @@ class Admin::UsersController < Admin::BaseController
 
   def set_company
     @user.update company_id: params[:company_id]
+  end
+
+  def qrcode
+    render layout: false
   end
 
   private
