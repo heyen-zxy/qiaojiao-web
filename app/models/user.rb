@@ -7,6 +7,7 @@ class User < ApplicationRecord
   has_many :addresses
   belongs_to :admin, optional: true
   has_many :share_orders, class_name: 'Order', foreign_key: :share_user_id
+  belongs_to :company, optional: true
   acts_as_paranoid
 
   def get_gender
@@ -55,6 +56,18 @@ class User < ApplicationRecord
 
   def paid_commissions
     paid_orders.sum :commission
+  end
+
+  def wx_qrcode
+    qrcode_path = "public/qrcode/#{self.id}.jpg"
+    unless File.exist? qrcode_path
+      buffer = Wechat.api.wxa_get_wxacode_unlimit "share_token=#{self.id}"
+      image_base64 = Base64.encode64(File.read(buffer))
+      File.open qrcode_path, 'w:ASCII-8BIT:utf-8' do |file|
+        file.write Base64.decode64(image_base64)
+      end
+    end
+    qrcode_path.gsub 'public/', ''
   end
 
   class << self

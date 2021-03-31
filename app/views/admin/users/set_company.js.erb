@@ -1,0 +1,3 @@
+$('#user_<%=@user.id %>').replaceWith('<%= j(render partial: 'admin/users/user', locals: {user: @user} ) %>')
+$('#myModal').modal('hide')
+hideSpinner()

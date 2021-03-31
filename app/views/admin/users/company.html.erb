@@ -8,7 +8,7 @@
       <div class="box-body">
         <div class="row">
           <div class="col-md-12 form-group">
-            <%= f.input :company_id, collection: Company.all.collect{|company| ["#{company.name}-#{company.user_name}", company.id]}, label: '商户', input_html: {style: 'width: 100%'} %>
+            <%= f.input :company_id, collection: Company.all.collect{|company| ["#{company.name}-#{company.user_name}-#{company.phone}", company.id]}, label: '商户', input_html: {style: 'width: 100%'} %>
           </div>
         </div>
       </div>

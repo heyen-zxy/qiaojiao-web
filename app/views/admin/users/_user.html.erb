@@ -3,6 +3,7 @@
   <td><%= user.get_gender %></td>
   <td><%= user.phone %></td>
   <td><%= "#{user.country}#{user.province}#{user.city}" %></td>
+  <td><%= "#{user.company&.name}#{user.company&.user_name}#{user.company&.phone}" %></td>
   <td><%= "#{user.admin&.name}-#{user.admin&.phone}" %></td>
   <td>
     <% if can? :users, :set_admin %>

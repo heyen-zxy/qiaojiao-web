@@ -12,7 +12,7 @@ module V1
         post "/wx_login" do
           user = User.init_by_web_code params[:code]
           if user.present? && user.is_a?(User) && user.id.present?
-            {authentication_token: user.authentication_token, share_token: user.share_token}
+            {authentication_token: user.authentication_token, share_token: user.id}
           end
         end
 

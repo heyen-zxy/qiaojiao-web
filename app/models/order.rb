@@ -123,7 +123,7 @@ class Order < ApplicationRecord
       order = user.orders.new
       from_token = params['from_token']
       if from_token.present?
-        share_user = User.find_by(share_token: from_token)
+        share_user = User.find_by(id: from_token)
       end
       order.share_user = share_user
       norm_array = JSON.parse params['norm_array']
