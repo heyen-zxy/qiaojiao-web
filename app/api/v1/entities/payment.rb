@@ -1,6 +1,6 @@
 module V1
   module Entities
-    class Banner < Grape::Entity
+    class Payment < Grape::Entity
       format_with(:timestamp) { |dt| dt.try :strftime, '%Y-%m-%d %H:%M:%S' }
       expose :id
       expose :order_id
