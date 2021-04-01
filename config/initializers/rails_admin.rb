@@ -31,7 +31,7 @@ RailsAdmin.config do |config|
   config.forgery_protection_settings = {with: :null_session}
 
   config.main_app_name = ["佳匠", "服务"]
-  config.included_models = ["Resource", 'Role', 'Category', 'Admin', 'Company']
+  config.included_models = ["Resource", 'Role', 'Category', 'Admin', 'Company', 'UserCommission']
 
   config.model 'Admin' do
     label_plural "公司人员"
@@ -82,6 +82,52 @@ RailsAdmin.config do |config|
                       live_update: :only
                   })
 
+  end
+
+  config.model 'UserCommission' do
+    label_plural "用户佣金"
+    list do
+      field :user do
+        pretty_value do
+          user = User.find(bindings[:object].user_id.to_s)
+          user.nick_name
+        end
+      end
+      field :user_id do
+        label '用户ID'
+
+        nested_form false
+      end
+      field :share_order do
+        label '分享订单数量'
+      end
+      field :commission do
+        label '累计佣金'
+      end
+      field :commission_wait do
+        label '累计佣金'
+      end
+      field :commission_paid do
+        label '累计佣金'
+      end
+    end
+    field :user do
+      label '用户'
+
+      nested_form false
+    end
+    field :share_order do
+      label '分享订单数量'
+    end
+    field :commission do
+      label '累计佣金'
+    end
+    field :commission_wait do
+      label '累计佣金'
+    end
+    field :commission_paid do
+      label '累计佣金'
+    end
   end
 
   config.model 'Role' do

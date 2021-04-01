@@ -15,5 +15,4 @@ class CommissionLog < ApplicationRecord
       transitions :from => [:wait], :to => :cancel
     end
   end
-
-  end
+end

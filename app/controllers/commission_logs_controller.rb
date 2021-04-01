@@ -1,0 +1,2 @@
+class CommissionLogsController < ApplicationController
+end

@@ -67,6 +67,8 @@ GEM
     bindex (0.8.1)
     bootsnap (1.7.3)
       msgpack (~> 1.0)
+    bootstrap-datepicker-rails (1.9.0.1)
+      railties (>= 3.0)
     bootstrap-sass (3.4.1)
       autoprefixer-rails (>= 5.2.1)
       sassc (>= 2.0.0)
@@ -448,6 +450,7 @@ DEPENDENCIES
   ancestry
   annotate
   bootsnap (>= 1.4.6)
+  bootstrap-datepicker-rails
   bootstrap-sass (~> 3.4.1)
   byebug
   cancancan

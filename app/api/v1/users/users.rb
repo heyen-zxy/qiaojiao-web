@@ -53,10 +53,10 @@ module V1
               wait_order: @current_user.orders.where(status: 'wait').size,
               paid_order: @current_user.orders.where(status: 'paid').size,
               served_order: @current_user.orders.where(status: 'served').size,
-              share_order: @current_user.share_orders.size,
-              commission: @current_user.commissions.to_i / 100.0,
-              commission_wait: @current_user.wait_commissions.to_i / 100.0,
-              commission_paid: @current_user.paid_commissions.to_i / 100.0
+              share_order: @current_user.user_commission&.share_order || 0,
+              commission: @current_user.user_commission&.view_commission || 0,
+              commission_wait: @current_user.user_commission&.view_commission_wait || 0,
+              commission_paid: @current_user.user_commission&.view_commission_paid || 0
           }
           if @current_user.admin.present?
             data.merge!({
@@ -119,12 +119,10 @@ module V1
         params do
           optional :page,     type: Integer, default: 1, desc: '页码'
           optional :per_page, type: Integer, desc: '每页数据个数', default: 10
-          optional :status,     type: String, desc: '状态'
-
         end
         get 'share_orders' do
           if @current_user.admin.present?
-            orders = @current_user.share_order_with_status(params[:status]).order('updated_at desc')
+            orders = @current_user.share_orders.where(status: 'served').order('updated_at desc')
             present paginate(orders), with: V1::Entities::Order, user: @current_user
           end
         end

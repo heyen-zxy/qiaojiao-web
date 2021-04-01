@@ -8,7 +8,8 @@
       <%= form_tag admin_users_path, method: :get do %>
         <div class="input-group input-group-sm">
           <div>
-            <div class="col-xs-6 col-md-9"></div>
+            <div class="col-xs-6 col-md-6"></div>
+            <div class="col-xs-6 col-md-3"><%= select_tag :type, options_for_select([['商户', 'company'], ['公司人员', 'admin']], params[:type]), include_blank: '所有状态', class: 'form-control', style: "width: 100%" %></div>
             <div class="col-xs-6 col-md-3">
               <input type="text" name="table_search" class="form-control" placeholder="昵称、手机号检索" value="<%= params[:table_search] %>">
             </div>
@@ -29,6 +30,11 @@
             <th>性别</th>
             <th>手机号</th>
             <th>城市</th>
+            <th>分享订单数</th>
+            <th>累计佣金</th>
+            <th>待提现</th>
+            <th>已提现</th>
+            <th>公司人员</th>
             <th>商户</th>
             <th>公司人员</th>
             <th></th>

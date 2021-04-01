@@ -110,4 +110,6 @@ gem 'grape-entity'
 gem 'grape-swagger', '>= 0.32.1'
 gem 'grape-swagger-rails'
 
+gem 'bootstrap-datepicker-rails'
+
 

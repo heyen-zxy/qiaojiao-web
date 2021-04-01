@@ -19,6 +19,31 @@ class InPayment < Payment
 
   end
 
+  def self.search_conn params
+    payments = self.joins(:order, :user).all
+    if params[:status].present?
+      payments = payments.where(status: params[:status])
+    end
+    if params[:table_search].present?
+      payments = payments.where('orders.no like ? or users.nick_name like ? or users.phone like ?', "%#{params[:table_search]}%", "%#{params[:table_search]}%", "%#{params[:table_search]}%")
+    end
+    if params[:date_from].present?
+      payments = payments.where('payments.created_at >= ?', params[:date_from].to_datetime)
+    end
+    if params[:date_to].present?
+      payments = payments.where('payments.created_at <= ?', params[:date_to].to_datetime.end_of_day)
+    end
+    payments
+  end
+
+  def view_amount
+    amount / 100.0
+  end
+
+  def get_status
+    InPayment::STATUS[status.to_sym]
+  end
+
   def unifiedorder
     total_fee = Rails.env == 'production' ? amount : 1
     params = {

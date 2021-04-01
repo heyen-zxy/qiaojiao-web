@@ -8,6 +8,7 @@ class User < ApplicationRecord
   belongs_to :admin, optional: true
   has_many :share_orders, class_name: 'Order', foreign_key: :share_user_id
   belongs_to :company, optional: true
+  has_one :user_commission
   acts_as_paranoid
 
   def get_gender
@@ -30,34 +31,6 @@ class User < ApplicationRecord
     self
   end
 
-  def commissions
-    share_orders.where(status: 'served').sum :commission
-  end
-
-  def wait_orders
-    share_orders.left_joins(:commission_log).where(status: 'served').where('commission_log_id is null or commission_logs.status = ?', 'wait')
-  end
-
-  def wait_commissions
-    wait_orders.sum :commission
-  end
-
-  def share_order_with_status status
-    if status == 'paid'
-      paid_orders
-    else
-      wait_orders
-    end
-  end
-
-  def paid_orders
-    share_orders.left_joins(:commission_log).where(status: 'served',).where('commission_logs.status = ?', 'paid')
-  end
-
-  def paid_commissions
-    paid_orders.sum :commission
-  end
-
   def wx_qrcode
     qrcode_path = "public/qrcode/#{self.id}.jpg"
     unless File.exist? qrcode_path
@@ -78,6 +51,13 @@ class User < ApplicationRecord
       users = self.all
       if params[:table_search].present?
         users = users.where('nick_name like ? or phone like ?', "%#{params[:table_search]}%", "%#{params[:table_search]}%")
+      end
+      if params[:type].present?
+        if params[:type] == 'company'
+          users = users.where.not(company_id: nil)
+        elsif params[:type] == 'admin'
+          users = users.where.not(admin_id: nil)
+        end
       end
       users
     end

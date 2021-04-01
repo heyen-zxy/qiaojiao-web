@@ -3,6 +3,10 @@
   <td><%= user.get_gender %></td>
   <td><%= user.phone %></td>
   <td><%= "#{user.country}#{user.province}#{user.city}" %></td>
+  <td><%= user.user_commission&.share_order %></td>
+  <td><%= user.user_commission&.view_commission %></td>
+  <td><%= user.user_commission&.view_commission_wait %></td>
+  <td><%= user.user_commission&.view_commission_paid %></td>
   <td><%= "#{user.company&.name}#{user.company&.user_name}#{user.company&.phone}" %></td>
   <td><%= "#{user.admin&.name}-#{user.admin&.phone}" %></td>
   <td>

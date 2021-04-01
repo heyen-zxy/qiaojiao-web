@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_30_020202) do
+ActiveRecord::Schema.define(version: 2021_04_01_081707) do
 
   create_table "addresses", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "address_code"
@@ -212,6 +212,29 @@ ActiveRecord::Schema.define(version: 2021_03_30_020202) do
   create_table "specs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.integer "product_id"
     t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "user_commission_logs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.integer "user_commission_id"
+    t.integer "order_id"
+    t.integer "user_id"
+    t.integer "commission"
+    t.integer "commission_before", default: 0
+    t.integer "commission_after", default: 0
+    t.datetime "deleted_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "user_commissions", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "share_order", default: 0
+    t.integer "commission", default: 0
+    t.integer "commission_wait", default: 0
+    t.integer "commission_paid", default: 0
+    t.datetime "deleted_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

@@ -1,0 +1,53 @@
+<div class="col-md-12">
+  <div class="box">
+    <div class="box-header with-border">
+      <h3 class="box-title">支付记录列表
+      </h3>
+    </div>
+    <div class="box-tools" style="margin-top: 10px;">
+      <%= form_tag admin_in_payments_path, method: :get do %>
+        <div class="input-group input-group-sm">
+          <div>
+            <div class="col-xs-6 col-md-3"><%= select_tag :status, options_for_select(InPayment::STATUS.collect{|key, value| [value, key]}, params[:status]), include_blank: '所有状态', class: 'form-control', style: "width: 100%" %></div>
+            <div class="col-xs-6 col-md-3"><%= text_field_tag :date_from, params[:date_from], placeholder: "下单时间区间", readonly: true, class: 'datepicker form-control' %></div>
+            <div class="col-xs-6 col-md-3"><%= text_field_tag :date_to, params[:date_to], placeholder: "下单时间区间", readonly: true, class: 'datepicker form-control' %></div>
+            <div class="col-xs-6 col-md-3">
+              <input type="text" name="table_search" class="form-control" placeholder="订单号、用户名、手机号" value="<%= params[:table_search] %>">
+            </div>
+          </div>
+
+          <div class="input-group-btn">
+            <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+          </div>
+        </div>
+      <% end %>
+    </div>
+    <!-- /.box-header -->
+    <div class="box-body">
+      <table class="table table-striped">
+        <tbody>
+          <tr>
+            <th>订单号</th>
+            <th>金额</th>
+            <th>用户</th>
+            <th>手机号码</th>
+            <th>状态</th>
+            <th>发起支付时间</th>
+          </tr>
+          <% @payments.each do |payment| %>
+            <%= render partial: 'admin/in_payments/payment', locals: {payment: payment} %>
+          <% end %>
+        </tbody>
+
+      </table>
+    </div>
+    <div class="box-footer clearfix">
+      <div class="pull-right pagination-sm no-margin">
+        <%= paginate @payments, params: {table_search: params[:table_search]} %>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+

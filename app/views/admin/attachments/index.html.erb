@@ -79,9 +79,9 @@
                         console.log('type:' + file.type);
                         isUpload = true;
                         // file.album_name=album_name;
-                        var progress = new FileProgress(file, 'fsUploadProgress');
-                        progress.setStatus("等待...");
-                        progress.bindUploadCancel(up);
+                        // var progress = new FileProgress(file, 'fsUploadProgress');
+                        // progress.setStatus("等待...");
+                        // progress.bindUploadCancel(up);
                       }else {
                         isUpload = false;
                         up.removeFile(file);
@@ -150,14 +150,12 @@
     }
 
     $(function(){
-        var bond_qiniu = new QiniuJsSDK();
-        var bond_option = set_option('bond');
-        var bond_uploader = bond_qiniu.uploader(bond_option);
+      var bond_qiniu = new QiniuJsSDK();
+      var bond_option = set_option('bond');
+      var bond_uploader = bond_qiniu.uploader(bond_option);
 
-      $(".modal").on("shown.bs.modal", function(){
-        $("img").lazyload({
-          container:$("#attachments-list")
-        });
+      $("#attachments-list img").lazyload({
+        container:$("#attachments-list")
       });
     })
 

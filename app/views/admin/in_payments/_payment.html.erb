@@ -1,0 +1,13 @@
+<tr id="payment_<%= payment.id %>">
+  <td>
+    <%= link_to admin_order_path(payment.order), 'data-toggle' => "modal", 'data-target' => "#myModal" do %>
+      <%= payment.order.no %>
+    <% end %>
+  </td>
+  <td><%= payment.view_amount %></td>
+  <td><%= payment.user&.nick_name %></td>
+  <td><%= payment.user&.phone %></td>
+  <td><%= payment.get_status %></td>
+  <td><%= payment.created_at.strftime '%Y-%m-%d %H:%M:%S' %></td>
+  <td></td>
+</tr>
