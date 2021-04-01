@@ -5,7 +5,7 @@ module V1
 
         desc '流动广告'
         get '/' do
-          banners = Banner.on.order('priority desc')
+          banners = ::Banner.on.order('priority desc')
           present banners, with: V1::Entities::Banner
         end
       end
