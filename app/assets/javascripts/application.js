@@ -221,7 +221,7 @@ function sendFile(file, editor) {
 }
 
 function setTableColor(){
-  i = 0
+  var i = 0
   $('.box-body table tr').each(function(e){
     i += 1;
     $(this).addClass('odd')
