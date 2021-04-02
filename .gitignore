@@ -5,6 +5,7 @@
 #   git config --global core.excludesfile '~/.gitignore_global'
 
 # Ignore bundler config.
+/config/settings.yml
 /.idea/
 /.bundle
 /test/
@@ -32,7 +33,7 @@
 
 # Ignore master key for decrypting credentials and more.
 /config/master.key
-
+/config/settings.yml
 config/settings.local.yml
 config/settings/*.local.yml
 config/environments/*.local.yml
