@@ -1,5 +1,5 @@
 class Admin::BannersController < Admin::BaseController
-  before_action :set_banner, only: [:edit, :update, :change_status]
+  before_action :set_banner, only: [:edit, :update, :change_status, :destroy]
   before_action :set_uptoken, only: [:new, :edit, :create, :update]
   include ApplicationHelper
   def index
@@ -34,6 +34,12 @@ class Admin::BannersController < Admin::BaseController
 
   def change_status
     @banner.update status: params[:status]
+  end
+
+  def destroy
+    if @banner.destroy
+      redirect_to admin_banners_path, notice: '删除成功'
+    end
   end
 
   private
