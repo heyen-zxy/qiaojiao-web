@@ -1,6 +1,6 @@
 class Product < ApplicationRecord
   validates_presence_of :name, :category_id, :product_type, :status, :attachments, :norms, :main_attachment_id
-  validates :commission,  inclusion: {in: 1..9999999999 }, if: Proc.new { |product| product.commission.present? }
+  #validates :commission,  inclusion: {in: 0..9999999999 }, if: Proc.new { |product| product.commission.present? }
   has_many :norms
   after_create :set_product_no
   belongs_to :category
