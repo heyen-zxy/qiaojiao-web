@@ -34,6 +34,9 @@ $.fn.datepicker.dates['zh-cn'] = {
   titleFormat: "yyyy年 MM", /* Leverages same syntax as 'format' */
   weekStart: 0
 };
+
+
+
 var initPage = function () {
   $(".modal").on("hidden.bs.modal", function() {
     $(this).removeData("bs.modal");
