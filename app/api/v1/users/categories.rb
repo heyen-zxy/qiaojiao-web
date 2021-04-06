@@ -20,8 +20,7 @@ module V1
 
           desc '分类商品'
           get 'products' do
-            p @current_user, 11111
-            present @category.products, with: V1::Entities::Product, user: @current_user
+            present @category.products.on, with: V1::Entities::Product, user: @current_user
           end
         end
       end

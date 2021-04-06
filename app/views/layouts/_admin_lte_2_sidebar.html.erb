@@ -43,21 +43,45 @@
         <% end %>
       </li>
 
+      <li class="<%= active_class :rosters %>">
+        <%= link_to admin_rosters_path do %>
+          <i class="fa  fa-user-secret"></i> <span>师傅、配送人员</span>
+        <% end %>
+      </li>
+
       <li class="<%= active_class :in_payments %>">
         <%= link_to admin_in_payments_path do %>
           <i class="fa fa-mail-reply "></i> <span>用户支付记录</span>
         <% end %>
       </li>
 
-      <li class="<%= active_class :out_payments %>">
-        <%= link_to admin_out_payments_path do %>
-          <i class="fa fa-mail-forward"></i> <span>佣金汇款记录</span>
+      <li class="<%= active_class :user_commission_logs %>">
+        <%= link_to admin_user_commission_logs_path do %>
+          <i class="fa fa-share-alt"></i> <span>用户分享佣金记录</span>
+        <% end %>
+      </li>
+
+      <li class="<%= active_class :admin_commission_logs %>">
+        <%= link_to admin_admin_commission_logs_path do %>
+          <i class="fa fa-truck"></i> <span>师傅佣金记录</span>
+        <% end %>
+      </li>
+
+      <li class="<%= active_class :commission_logs %>">
+        <%= link_to admin_commission_logs_path do %>
+          <i class="fa fa-money"></i> <span>佣金提现记录</span>
         <% end %>
       </li>
 
       <li class="<%= active_class :banners %>">
         <%= link_to admin_banners_path do %>
-          <i class="fa fa-newspaper-o"></i> <span>流动广告</span>
+          <i class="fa  fa-file-image-o"></i> <span>流动广告</span>
+        <% end %>
+      </li>
+
+      <li class="<%= active_class :news %>">
+        <%= link_to admin_news_index_path do %>
+          <i class="fa fa-newspaper-o"></i> <span>文字流动广告</span>
         <% end %>
       </li>
 

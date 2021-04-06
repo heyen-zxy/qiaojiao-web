@@ -101,9 +101,7 @@ class Order < ApplicationRecord
     amount = 0
     if self.share_user.present?
       order_norms.each do |order_norm|
-        amount += order_norm.product.user_commission(self.share_user) * order_norm.number if order_norm.price >= 200
-        p order_norm.price, order_norm.product.user_commission(self.share_user)
-        p amount
+        amount += order_norm.norm.user_commission(self.share_user) * order_norm.number
       end
     end
     if amount > 0

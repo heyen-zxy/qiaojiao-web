@@ -24,10 +24,15 @@
       </div>
       <div class="row">
         <div class="col-md-6 form-group">
-          <%= f.input :commission, as: :float, input_html: {value: @product.view_commission} %>
+          <%= f.input :commission %>
         </div>
         <div class="col-md-6 form-group">
-          <%= f.input :high_commission, as: :float, input_html: {value: @product.view_high_commission} %>
+          <%= f.input :high_commission %>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6 form-group">
+          <%= f.input :admin_commission %>
         </div>
       </div>
       <div class="row">

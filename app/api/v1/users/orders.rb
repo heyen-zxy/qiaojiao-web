@@ -21,6 +21,20 @@ module V1
             present @order, with: V1::Entities::Order
           end
 
+          desc '删除订单'
+          delete '/' do
+            @order = @current_user.orders.wait.find_by id: params[:id]
+            if @order.present?
+              if @order.destroy
+                {req_status: 'success', status: 'success'}
+              else
+                {req_status: 'success', status: 'failed'}
+              end
+            else
+              {req_status: 'success', status: 'failed'}
+            end
+          end
+
           desc '微信下单支付'
           params do
             optional :address_id, type: Float, desc: '地址'

@@ -20,39 +20,6 @@ class Product < ApplicationRecord
       service: '服务'
   }
 
-  def user_commission user
-    if user.admin.present?
-      if high_commission.to_i > 0
-        high_commission.to_i
-      else
-        commission.to_i
-      end
-    else
-      commission.to_i
-    end
-  end
-
-  def view_user_commission user
-    comm = if user.admin.present?
-      if high_commission.to_i > 0
-        high_commission.to_i
-      else
-        commission.to_i
-      end
-    else
-      commission.to_i
-           end
-    comm / 100.0
-  end
-
-  def view_commission
-    commission.to_f / 100
-  end
-
-  def view_high_commission
-    high_commission.to_f / 100
-  end
-
   def get_status
     Product::statuses[self.status.to_sym]
   end
@@ -73,6 +40,29 @@ class Product < ApplicationRecord
     else
       prices.first
     end
+  end
+
+  def user_commission user=nil
+    commissions = norms.collect{|norm| norm.user_commission(user)}
+    if commissions.size > 1
+      "#{commissions.min}~#{commissions.max}"
+    else
+      commissions.first
+    end
+  end
+
+  def view_user_commission user=nil
+    commissions = norms.collect{|norm| norm.view_user_commission(user)}
+    if commissions.size > 1
+      "#{commissions.min}~#{commissions.max}"
+    else
+      commissions.first
+    end
+  end
+
+  def max_commission user=nil
+    norm = norms.order('price desc').first
+    norm.view_user_commission(user)
   end
 
   def encode_token

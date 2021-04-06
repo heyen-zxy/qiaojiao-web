@@ -93,8 +93,9 @@ zh-CN:
         product_type: '类型'
         category_id: '分类'
         status: '状态'
-        commission: '个人佣金'
-        high_commission: '店铺佣金'
+        commission: '个人佣金(%)'
+        high_commission: '店铺佣金(%)'
+        high_commission: '师傅佣金(%)'
       report:
         project_id: '项目名'
         name: '工程名'

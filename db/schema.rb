@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_01_081707) do
+ActiveRecord::Schema.define(version: 2021_04_06_101722) do
 
   create_table "addresses", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "address_code"
@@ -22,6 +22,30 @@ ActiveRecord::Schema.define(version: 2021_04_01_081707) do
     t.datetime "updated_at", null: false
     t.integer "address_type", default: 0
     t.boolean "default", default: false
+  end
+
+  create_table "admin_commission_logs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.integer "admin_commission_id"
+    t.integer "order_id"
+    t.integer "admin_id"
+    t.integer "commission"
+    t.integer "commission_before", default: 0
+    t.integer "commission_after", default: 0
+    t.text "desc"
+    t.integer "commission_type"
+    t.datetime "deleted_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "admin_commissions", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.integer "admin_id"
+    t.integer "commission", default: 0
+    t.integer "commission_wait", default: 0
+    t.integer "commission_paid", default: 0
+    t.datetime "deleted_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "admins", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -93,6 +117,13 @@ ActiveRecord::Schema.define(version: 2021_04_01_081707) do
   create_table "model_attachments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.integer "model_id"
     t.integer "attachment_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "news", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "content"
+    t.string "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -175,6 +206,7 @@ ActiveRecord::Schema.define(version: 2021_04_01_081707) do
     t.integer "main_attachment_id"
     t.integer "high_commission"
     t.datetime "deleted_at"
+    t.integer "admin_commission", default: 0
     t.index ["deleted_at"], name: "index_products_on_deleted_at"
   end
 
@@ -226,6 +258,7 @@ ActiveRecord::Schema.define(version: 2021_04_01_081707) do
     t.datetime "deleted_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "commission_type"
   end
 
   create_table "user_commissions", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|

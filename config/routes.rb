@@ -41,12 +41,22 @@ Rails.application.routes.draw do
         post :change_status
       end
     end
+    resources :news do
+      collection do
+        post :change_status
+      end
+    end
     resources :attachments do
       collection do
         post :upload
         post :upload_file
       end
     end
+
+    resources :admin_commission_logs
+    resources :user_commission_logs
+    resources :commission_logs
+    resources :rosters
   end
 
 end

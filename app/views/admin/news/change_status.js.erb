@@ -1,0 +1,2 @@
+$('#news_<%=@news.id %>').replaceWith('<%= j(render partial: 'admin/news/news', locals: {news: @news} ) %>')
+hideSpinner()

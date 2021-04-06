@@ -13,7 +13,7 @@ module V1
       expose :amount
       expose :view_commission do |instance, options|
         if options[:user].present?
-          instance.view_user_commission options[:user]
+          instance.max_commission options[:user]
         else
           0
         end

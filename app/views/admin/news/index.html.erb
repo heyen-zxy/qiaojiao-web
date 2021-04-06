@@ -1,0 +1,48 @@
+<div class="col-md-12">
+  <div class="box">
+    <div class="box-header with-border">
+      <h3 class="box-title">文字流动广告
+        <% if can? :new, :news %>
+          <small><%= link_to '添加', new_admin_news_path, class: 'font-a label bg-green' %></small>
+        <% end %>
+      </h3>
+    </div>
+    <!-- /.box-header -->
+    <div class="box-body">
+      <table class="table table-striped">
+        <tbody>
+        <tr>
+          <th>内容</th>
+          <th>状态</th>
+          <th style="width: 20%"></th>
+        </tr>
+        <% @news.each do |news| %>
+          <%= render partial: 'admin/news/news', locals: {news: news}%>
+        <% end %>
+        </tbody>
+      </table>
+    </div>
+    <div class="box-footer clearfix">
+      <div class="pull-right pagination-sm no-margin">
+        <%= paginate @news, params: {status: params[:status], news_type: params[:news_type], table_search: params[:table_search]}%>
+      </div>
+
+    </div>
+  </div>
+</div>
+<script type='text/javascript'>
+  function change_status(id, status){
+    showSpinner();
+    $.ajax({
+      type: 'POST',
+      url: '<%= change_status_admin_news_index_path %>',
+      data: {id: id, status: status},
+      dataType: 'script',
+      success: function (data) {
+
+      }
+    })
+  }
+</script>
+
+

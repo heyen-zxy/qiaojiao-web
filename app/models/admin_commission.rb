@@ -1,0 +1,2 @@
+class AdminCommission < ApplicationRecord
+end

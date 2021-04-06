@@ -8,6 +8,7 @@ module V1
     mount V1::Users::Banners
     mount V1::Users::Addresses
     mount V1::Users::Orders
+    mount V1::Users::News
 
     mount V1::Wechat
 
