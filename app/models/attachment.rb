@@ -14,6 +14,8 @@ class Attachment < ApplicationRecord
       BannerAttachment
     when 'server_user'
       ServerUserAttachment
+    when 'public_message'
+      MessageAttachment
     end
   end
 end

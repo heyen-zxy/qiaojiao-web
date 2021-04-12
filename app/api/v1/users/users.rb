@@ -50,6 +50,7 @@ module V1
         }
         get 'my' do
           data = {
+              can_cash: true,
               wait_order: @current_user.orders.where(status: 'wait').size,
               paid_order: @current_user.orders.where(status: 'paid').size,
               served_order: @current_user.orders.where(status: 'served').size,
@@ -60,9 +61,10 @@ module V1
           }
           if @current_user.admin.present?
             data.merge!({
-                           admin_server_order: @current_user.admin.orders.size,
-                           admin_wait_server_order: @current_user.admin.orders.where(status: 'paid').size,
-                           admin_served_order: @current_user.admin.orders.where(status: 'served').size
+                           admin_paid_order: @current_user.admin.orders.paid.size,
+                           admin_served_order: @current_user.admin.orders.served.size,
+                           admin_commission_wait: @current_user.admin.admin_commission&.view_commission_wait || 0,
+                           admin_commission_paid: @current_user.admin.admin_commission&.view_commission_paid || 0
                        })
           end
           data
@@ -125,6 +127,53 @@ module V1
             orders = @current_user.share_orders.where(status: 'served').order('updated_at desc')
             present paginate(orders), with: V1::Entities::Order, user: @current_user
           end
+        end
+
+        desc '分享佣金提现记录', headers: {
+            "X-Auth-Token" => {
+                description: "登录token",
+                required: false
+            }
+        }
+        params do
+          optional :page,     type: Integer, default: 1, desc: '页码'
+          optional :per_page, type: Integer, desc: '每页数据个数', default: 15
+        end
+        get 'user_commission_logs' do
+          logs = @current_user.user_commission_logs.order('id desc')
+          present paginate(logs), with: V1::Entities::UserCommissionLog, user: @current_user
+        end
+
+        desc '师傅佣金提现记录', headers: {
+            "X-Auth-Token" => {
+                description: "登录token",
+                required: false
+            }
+        }
+        params do
+          optional :page,     type: Integer, default: 1, desc: '页码'
+          optional :per_page, type: Integer, desc: '每页数据个数', default: 15
+        end
+        get 'admin_commission_logs' do
+          @current_user = User.find 1
+          if @current_user.admin.present?
+            logs = @current_user.admin.admin_commission_logs.order('id desc')
+            p logs.size
+            present paginate(logs), with: V1::Entities::AdminCommissionLog, user: @current_user
+          end
+        end
+
+        desc '提现',  headers: {
+            "X-Auth-Token" => {
+                description: "登录token",
+                required: false
+            }
+        }
+        params do
+          requires :cash,     type: Integer, desc: "提现金额"
+        end
+        post 'cash' do
+          {status: 'failed', message: '暂时未开通该功能'}
         end
 
         desc '下单',  headers: {

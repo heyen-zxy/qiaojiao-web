@@ -32,6 +32,7 @@ Rails.application.routes.draw do
     resources :products do
       collection do
         post :change_status
+        post :tag_options
       end
     end
     resources :in_payments
@@ -55,8 +56,13 @@ Rails.application.routes.draw do
 
     resources :admin_commission_logs
     resources :user_commission_logs
-    resources :commission_logs
-    resources :rosters
+    resources :public_messages
+    resources :server_users do
+      member do
+        get :cash_form
+        post :cash
+      end
+    end
   end
 
 end

@@ -31,7 +31,7 @@ RailsAdmin.config do |config|
   config.forgery_protection_settings = {with: :null_session}
 
   config.main_app_name = ["佳匠", "服务"]
-  config.included_models = ["Resource", 'Role', 'Category', 'Admin', 'Company', 'UserCommission']
+  config.included_models = ["Resource", 'Role', 'Category', 'Tag', 'MessageType','Admin', 'Company', 'UserCommission']
 
   config.model 'Admin' do
     label_plural "公司人员"
@@ -64,7 +64,6 @@ RailsAdmin.config do |config|
     field :address do
       label '地址'
     end
-
   end
 
   config.model 'Category' do
@@ -82,6 +81,23 @@ RailsAdmin.config do |config|
                       live_update: :only
                   })
 
+  end
+
+  config.model 'Tag' do
+    label_plural "品牌"
+    field :category do
+      label '分类名'
+    end
+    field :name do
+      label '品牌名'
+    end
+  end
+
+  config.model 'MessageType' do
+    label_plural "消息类型"
+    field :name do
+      label '消息类型'
+    end
   end
 
   config.model 'UserCommission' do

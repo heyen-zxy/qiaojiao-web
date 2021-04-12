@@ -1,0 +1,7 @@
+if(<%= @flag %>){
+  $('#admin_<%=@admin.id %>').replaceWith('<%= j(render partial: 'admin/server_users/user', locals: {admin: @admin.reload} ) %>')
+  $('#myModal').modal('hide')
+}else{
+  $('#new_admin_commission_log').replaceWith('<%= j(render partial: 'admin/server_users/form', locals: {log: @log} ) %>')
+}
+hideSpinner()

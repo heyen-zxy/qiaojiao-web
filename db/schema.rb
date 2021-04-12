@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_06_101722) do
+ActiveRecord::Schema.define(version: 2021_04_09_065018) do
 
   create_table "addresses", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "address_code"
@@ -36,6 +36,8 @@ ActiveRecord::Schema.define(version: 2021_04_06_101722) do
     t.datetime "deleted_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "status"
+    t.integer "operation_id"
   end
 
   create_table "admin_commissions", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -90,6 +92,7 @@ ActiveRecord::Schema.define(version: 2021_04_06_101722) do
     t.datetime "updated_at", null: false
     t.integer "sort_num", default: 0
     t.datetime "deleted_at"
+    t.integer "ancestry_depth", default: 0
     t.index ["deleted_at"], name: "index_categories_on_deleted_at"
   end
 
@@ -112,6 +115,12 @@ ActiveRecord::Schema.define(version: 2021_04_06_101722) do
     t.datetime "updated_at", null: false
     t.datetime "deleted_at"
     t.index ["deleted_at"], name: "index_companies_on_deleted_at"
+  end
+
+  create_table "message_types", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "model_attachments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -166,6 +175,7 @@ ActiveRecord::Schema.define(version: 2021_04_06_101722) do
     t.integer "commission", default: 0
     t.integer "commission_log_id"
     t.datetime "deleted_at"
+    t.integer "admin_commission"
     t.index ["deleted_at"], name: "index_orders_on_deleted_at"
   end
 
@@ -191,6 +201,13 @@ ActiveRecord::Schema.define(version: 2021_04_06_101722) do
     t.text "response_data"
   end
 
+  create_table "product_tags", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.integer "tag_id"
+    t.integer "product_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "products", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.integer "category_id"
     t.string "product_type"
@@ -207,7 +224,21 @@ ActiveRecord::Schema.define(version: 2021_04_06_101722) do
     t.integer "high_commission"
     t.datetime "deleted_at"
     t.integer "admin_commission", default: 0
+    t.integer "tag_id"
     t.index ["deleted_at"], name: "index_products_on_deleted_at"
+  end
+
+  create_table "public_messages", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "status"
+    t.text "content"
+    t.integer "valid_days"
+    t.datetime "deleted_at"
+    t.string "phone"
+    t.integer "message_type_id"
+    t.string "name"
+    t.integer "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "resources", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -248,6 +279,15 @@ ActiveRecord::Schema.define(version: 2021_04_06_101722) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "tags", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "name"
+    t.integer "category_id"
+    t.string "ancestry"
+    t.integer "ancestry_depth", default: 0
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "user_commission_logs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.integer "user_commission_id"
     t.integer "order_id"
@@ -259,6 +299,7 @@ ActiveRecord::Schema.define(version: 2021_04_06_101722) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "commission_type"
+    t.integer "status"
   end
 
   create_table "user_commissions", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|

@@ -3,7 +3,8 @@ class Product < ApplicationRecord
   #validates :commission,  inclusion: {in: 0..9999999999 }, if: Proc.new { |product| product.commission.present? }
   has_many :norms
   after_create :set_product_no
-  belongs_to :category
+  belongs_to :category, optional: true
+  belongs_to :tag
 
   acts_as_paranoid
 

@@ -1,0 +1,17 @@
+<tr id="log_<%= log.id %>">
+  <td>
+    <% if log.order.present? %>
+      <%= link_to admin_order_path(log.order),  'data-toggle' => "modal", 'data-target' => "#myModal" do %>
+        <%= log.order.no %>
+      <% end %>
+    <% end %>
+  </td>
+  <td><%= log.admin&.name %></td>
+  <td><%= log.admin&.phone %></td>
+  <td><%= log.get_commission_type %></td>
+  <td><%= log.get_status %></td>
+  <td style="color: <%= log.view_commission > 0 ? 'green' : 'red'%>"><%= log.view_commission %></td>
+  <td><%= log.view_commission_after %></td>
+  <td><%= log.updated_at.strftime '%Y-%m-%d %H:%M:%S'  %></td>
+  <td></td>
+</tr>

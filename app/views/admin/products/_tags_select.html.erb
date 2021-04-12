@@ -1,0 +1,2 @@
+
+<%= select_tag 'product[tag_id]', options_for_select(@tags.collect{|tag| [tag.name, tag.id]}, ''), class: 'form-control', include_blank: true  %>

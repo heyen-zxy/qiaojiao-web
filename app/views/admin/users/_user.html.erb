@@ -11,7 +11,7 @@
   <td><%= "#{user.admin&.name}-#{user.admin&.phone}" %></td>
   <td>
     <% if can? :users, :set_admin %>
-      <%= link_to admin_admin_user_path(user), class: "btn btn-primary btn-xs", 'data-toggle' => "modal", 'data-target' => "#myModal" do %>
+      <%= link_to admin_admin_user_path(user), class: "btn btn-danger btn-xs", 'data-toggle' => "modal", 'data-target' => "#myModal" do %>
         绑定内部人员
       <% end %>
     <% end %>
@@ -27,5 +27,9 @@
         商户二维码
       <% end %>
     <% end %>
+
+      <%= link_to admin_user_commission_logs_path(user_id: user.id), class: "btn btn-primary  btn-xs" do %>
+        佣金记录
+      <% end %>
   </td>
 </tr>

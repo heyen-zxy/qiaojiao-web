@@ -1,0 +1,64 @@
+<div class="col-md-12">
+  <div class="box">
+    <div class="box-header with-border">
+      <h3 class="box-title">用户佣金记录
+      </h3>
+    </div>
+    <div class="box-tools" style="margin-top: 10px;">
+      <%= form_tag admin_user_commission_logs_path, method: :get do %>
+        <div class="input-group input-group-sm">
+          <div>
+            <div class="col-xs-6 col-md-3">
+              <%= select_tag :user_id, options_for_select(User.all.collect{|user| ["#{user.nick_name}-#{user.phone}", user.id]}, params[:user_id]), include_blank: '微信用户', class: 'form-control' %>
+            </div>
+
+            <div class="col-xs-6 col-md-3">
+              <%= select_tag :status, options_for_select(UserCommissionLog.cn_statuses.collect{|key, value| [value, key]}, params[:status]), include_blank: '状态', class: 'form-control' %>
+            </div>
+
+            <div class="col-xs-6 col-md-3">
+              <%= select_tag :commission_type, options_for_select(UserCommissionLog.cn_commission_types.collect{|key, value| [value, key]}, params[:commission_type]), include_blank: '类型', class: 'form-control' %>
+            </div>
+            <div class="col-xs-6 col-md-3">
+              <input type="text" name="table_search" class="form-control" placeholder="姓名、手机号检索" value="<%= params[:table_search] %>">
+            </div>
+          </div>
+
+          <div class="input-group-btn">
+            <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+          </div>
+        </div>
+      <% end %>
+    </div>
+    <!-- /.box-header -->
+    <div class="box-body">
+      <table class="table table-striped">
+        <tbody>
+        <tr>
+          <th>关联订单号</th>
+          <th>昵称</th>
+          <th>手机号</th>
+          <th>类型</th>
+          <th>状态</th>
+          <th>金额</th>
+          <th>当前余额</th>
+          <th>时间</th>
+          <th></th>
+        </tr>
+        <% @logs.each do |log| %>
+          <%= render partial: 'admin/user_commission_logs/log', locals: {log: log} %>
+        <% end %>
+        </tbody>
+
+      </table>
+    </div>
+    <div class="box-footer clearfix">
+      <div class="pull-right pagination-sm no-margin">
+        <%= paginate @logs, params: {table_search: params[:table_search]} %>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+

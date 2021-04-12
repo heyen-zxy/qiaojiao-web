@@ -9,6 +9,7 @@ class User < ApplicationRecord
   has_many :share_orders, class_name: 'Order', foreign_key: :share_user_id
   belongs_to :company, optional: true
   has_one :user_commission
+  has_many :user_commission_logs
   acts_as_paranoid
 
   def get_gender

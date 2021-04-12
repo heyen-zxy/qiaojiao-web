@@ -78,6 +78,10 @@ class Admin::ProductsController < Admin::BaseController
     @product.update status: params[:status]
   end
 
+  def tag_options
+    @tags = Tag.where category_id: params[:id]
+  end
+
   private
   def set_product
     @product = Product.find_by id: params[:id]
@@ -85,7 +89,7 @@ class Admin::ProductsController < Admin::BaseController
   end
 
   def product_permit
-    params.require(:product).permit(:name, :category_id, :status, :product_type, :desc)
+    params.require(:product).permit(:name, :category_id, :status, :product_type, :desc, :high_commission, :commission, :admin_commission, :tag_id)
   end
 
 end

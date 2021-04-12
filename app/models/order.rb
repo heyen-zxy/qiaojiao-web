@@ -98,6 +98,11 @@ class Order < ApplicationRecord
   end
 
   def set_commission
+    set_user_commission
+    set_admin_commission
+  end
+
+  def set_user_commission
     amount = 0
     if self.share_user.present?
       order_norms.each do |order_norm|
@@ -110,9 +115,67 @@ class Order < ApplicationRecord
     end
   end
 
+  def set_admin_commission
+    amount = 0
+    if self.admin.present?
+      order_norms.each do |order_norm|
+        amount += order_norm.norm.admin_commission * order_norm.number
+      end
+    end
+    if amount > 0
+      self.update admin_commission: amount
+      AdminCommissionLog.set_commission self
+    end
+  end
+
   def set_server_at
     self.update server_at: DateTime.now
   end
+
+  # h5CtjMGbiLCl7aICaxndzkAa5ExNx7_qVCYN4oiIJSM
+  # 模板编号
+  # 2025
+  # 标题
+  # 派工通知
+  # 派工人员
+  # {{name1.DATA}}
+  # 联系人
+  # {{name3.DATA}}
+  # 联系电话
+  # {{phone_number4.DATA}}
+  # 订单编号
+  # {{character_string6.DATA}}
+  # 派工内容
+  # {{thing2.DATA}}
+  #
+  # YEWcpJmcPiVeAg6igaGkcW1cSFGKn8ZaZOM5RZIpBZg
+  # 模板编号
+  # 936
+  # 标题
+  # 订单状态变动通知
+  # 详细内容
+  # 订单号
+  # {{character_string1.DATA}}
+  # 订单状态
+  # {{phrase2.DATA}}
+  # 更新时间
+  # {{date4.DATA}}
+  # 备注
+  # {{thing5.DATA}}
+  #
+  # 模板ID
+  # A0-kDcODKZr7h-Zc-EEKQFzhaKABp6Ug0m5LfKcdesk
+  # 模板编号
+  # 669
+  # 付款成功通知
+  # 商品详情
+  # {{thing3.DATA}}
+  # 付款时间
+  # {{date2.DATA}}
+  # 订单编号
+  # {{character_string1.DATA}}
+  # 场景说明
+  # 订单支付成功通知
 
   class << self
     def status_select

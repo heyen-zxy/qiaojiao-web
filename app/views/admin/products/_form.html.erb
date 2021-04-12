@@ -19,8 +19,18 @@
           <%= f.input :category_id, collection: Category.select_options %>
         </div>
         <div class="col-md-6 form-group">
+          <%= f.input :tag_id, collection: @product.category.present? ? @product.category.tags : [] %>
+        </div>
+
+      </div>
+      <div class="row">
+        <div class="col-md-6 form-group">
           <%= f.input :status, collection: Product.status_select %>
         </div>
+        <div class="col-md-6 form-group">
+          <%= f.input :admin_commission %>
+        </div>
+
       </div>
       <div class="row">
         <div class="col-md-6 form-group">
@@ -28,11 +38,6 @@
         </div>
         <div class="col-md-6 form-group">
           <%= f.input :high_commission %>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-6 form-group">
-          <%= f.input :admin_commission %>
         </div>
       </div>
       <div class="row">
@@ -153,4 +158,19 @@
     </div>
   </div>
 <% end %>
+<script type="text/javascript">
+  $(function(){
+    $('#product_category_id').change(function(e){
+      $.ajax({
+        type: 'POST',
+        url: '<%= tag_options_admin_products_path %>',
+        data: {id: $(this).val()},
+        dataType: 'script',
+        success: function (data) {
+
+        }
+      })
+    })
+  })
+</script>
 

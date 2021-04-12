@@ -1,0 +1,15 @@
+<tr id="admin_<%= admin.id %>">
+  <td><%= admin.name %></td>
+  <td><%= admin.phone %></td>
+  <td><%= admin.admin_commission&.view_commission %></td>
+  <td><%= admin.admin_commission&.view_commission_paid %></td>
+  <td><%= admin.admin_commission&.view_commission_wait %></td>
+  <td>
+    <%= link_to admin_admin_commission_logs_path(admin_id: admin.id), class: "btn btn-primary  btn-xs", 'data-target' => "#myModal" do %>
+      佣金记录
+    <% end %>
+    <%= link_to cash_form_admin_server_user_path(admin), class: "btn btn-success btn-xs", 'data-toggle' => "modal", 'data-target' => "#myModal" do %>
+      提现
+    <% end %>
+  </td>
+</tr>

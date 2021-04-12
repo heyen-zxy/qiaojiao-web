@@ -1,0 +1,12 @@
+<%= simple_form_for  [:admin, log], class: 'forms-sample', onkeydown: "if(event.keyCode==13)return false;"  do |f| %>
+  <div class="box-body">
+    <div class="row">
+      <div class="col-md-12 form-group">
+        <%= f.input :commission, input_html: { value: log.view_commission.abs} %>
+      </div>
+      <div class="col-md-12 form-group">
+        <%= f.input :desc %>
+      </div>
+    </div>
+  </div>
+<% end %>

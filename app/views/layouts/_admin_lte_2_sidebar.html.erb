@@ -43,8 +43,8 @@
         <% end %>
       </li>
 
-      <li class="<%= active_class :rosters %>">
-        <%= link_to admin_rosters_path do %>
+      <li class="<%= active_class :server_users %>">
+        <%= link_to admin_server_users_path do %>
           <i class="fa  fa-user-secret"></i> <span>师傅、配送人员</span>
         <% end %>
       </li>
@@ -67,12 +67,6 @@
         <% end %>
       </li>
 
-      <li class="<%= active_class :commission_logs %>">
-        <%= link_to admin_commission_logs_path do %>
-          <i class="fa fa-money"></i> <span>佣金提现记录</span>
-        <% end %>
-      </li>
-
       <li class="<%= active_class :banners %>">
         <%= link_to admin_banners_path do %>
           <i class="fa  fa-file-image-o"></i> <span>流动广告</span>
@@ -82,6 +76,12 @@
       <li class="<%= active_class :news %>">
         <%= link_to admin_news_index_path do %>
           <i class="fa fa-newspaper-o"></i> <span>文字流动广告</span>
+        <% end %>
+      </li>
+
+      <li class="<%= active_class :public_messages %>">
+        <%= link_to admin_public_messages_path do %>
+          <i class="fa fa-comment-o"></i> <span>本地消息</span>
         <% end %>
       </li>
 

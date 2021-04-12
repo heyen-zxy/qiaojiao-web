@@ -79,9 +79,9 @@
               console.log('type:' + file.type);
               isUpload = true;
               // file.album_name=album_name;
-              var progress = new FileProgress(file, 'fsUploadProgress');
-              progress.setStatus("等待...");
-              progress.bindUploadCancel(up);
+              // var progress = new FileProgress(file, 'fsUploadProgress');
+              // progress.setStatus("等待...");
+              // progress.bindUploadCancel(up);
             }else {
               isUpload = false;
               up.removeFile(file);

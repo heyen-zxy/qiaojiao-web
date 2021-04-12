@@ -19,6 +19,10 @@ class Norm < ApplicationRecord
     end
   end
 
+  def admin_commission
+    product.admin_commission * price / 100
+  end
+
   def view_user_commission user=nil
     user_commission(user) / 100.0
   end

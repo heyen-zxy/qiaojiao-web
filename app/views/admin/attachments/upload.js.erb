@@ -1,6 +1,14 @@
 <% if @attachment.class.name == 'BannerAttachment' %>
   $('#banner_attachment_id').val(<%= @attachment.id %>)
   $('#select_attachment').html('<div class="col-sm-12 image"><img src="<%= @attachment.preview_url %>" style="width:300px;height:100px;"  file_id="<%= @attachment.id %>"></img></div>')
+<%elsif @attachment.class.name == 'MessageAttachment' %>
+  $('.attachments-list').prepend('<div class="col-sm-3 image"><img src="<%= @attachment.preview_url %>" style="width:140px;height:140px;" class="select_image" onclick="selectImage(this)" file_id="<%= @attachment.id %>"></img></div>')
+  var v = $('#public_message_attachment_ids').val()
+  if(v){
+    $('#public_message_attachment_ids').val(v + ',' + <%= @attachment.id %>)
+  }else{
+    $('#public_message_attachment_ids').val(<%= @attachment.id %>)
+  }
 <%else %>
   $('.attachments-list').prepend('<div class="col-sm-3 image"><img src="<%= @attachment.preview_url %>" style="width:140px;height:140px;" class="select_image" onclick="selectImage(this)" file_id="<%= @attachment.id %>"></img></div>')
 <% end %>

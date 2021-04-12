@@ -1,0 +1,15 @@
+<tr id="message_<%= message.id %>">
+  <td><%= message.name %></td>
+  <td ><%= message.phone%></td>
+  <td><%= message.message_type&.name %></td>
+  <td><%= message.user&.nick_name %></td>
+  <td><%= message.content %></td>
+  <td>
+    <%= link_to edit_admin_public_message_path(message), class: "btn btn-success btn-xs" do %>
+      <i class="fa fa-edit"></i>编辑
+    <% end %>
+    <%= link_to admin_public_message_path(message), 'data-confirm': "确认删除吗", method: 'delete',class: "btn btn-danger btn-xs" do %>
+      <i class="fa fa-close"></i>删除
+    <% end %>
+  </td>
+</tr>

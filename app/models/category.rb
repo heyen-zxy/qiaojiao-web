@@ -1,7 +1,8 @@
 class Category < ApplicationRecord
   acts_as_paranoid
   has_many :products
-  has_ancestry
+  has_many :tags
+  has_ancestry cache_depth: true
 
   default_scope {order('sort_num desc')}
 

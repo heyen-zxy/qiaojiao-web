@@ -93,9 +93,10 @@ zh-CN:
         product_type: '类型'
         category_id: '分类'
         status: '状态'
+        tag_id: '品牌'
         commission: '个人佣金(%)'
         high_commission: '店铺佣金(%)'
-        high_commission: '师傅佣金(%)'
+        admin_commission: '师傅佣金(%)'
       report:
         project_id: '项目名'
         name: '工程名'
@@ -111,6 +112,12 @@ zh-CN:
         desc: '其他信息'
         user_id: '报备人'
         phone: '联系电话'
+      admin_commission_log:
+        commission: '提现金额'
+        desc: '备注'
+      user_commission_log:
+        commission: '提现金额'
+        desc: '备注'
       cost:
         user_id: '销售人员'
         amount: '费用金额'
