@@ -6,7 +6,7 @@ module V1
       expose :id
       expose :name
       expose :parent_id
-
+      expose :tags, using: V1::Entities::Tag
       # product_category 是在rails的model中定义的关联，在这里可以直接用
       expose :parent, using: V1::Entities::Category
 

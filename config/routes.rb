@@ -54,6 +54,8 @@ Rails.application.routes.draw do
       end
     end
 
+    resources :tags
+
     resources :admin_commission_logs
     resources :user_commission_logs
     resources :public_messages

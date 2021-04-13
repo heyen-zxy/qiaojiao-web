@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_09_065018) do
+ActiveRecord::Schema.define(version: 2021_04_13_073522) do
 
   create_table "addresses", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "address_code"
@@ -286,6 +286,8 @@ ActiveRecord::Schema.define(version: 2021_04_09_065018) do
     t.integer "ancestry_depth", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "attachment_id"
+    t.datetime "deleted_at"
   end
 
   create_table "user_commission_logs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|

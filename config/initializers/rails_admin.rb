@@ -31,7 +31,7 @@ RailsAdmin.config do |config|
   config.forgery_protection_settings = {with: :null_session}
 
   config.main_app_name = ["佳匠", "服务"]
-  config.included_models = ["Resource", 'Role', 'Category', 'Tag', 'MessageType','Admin', 'Company', 'UserCommission']
+  config.included_models = ["Resource", 'Role', 'Category', 'MessageType','Admin', 'Company', 'UserCommission']
 
   config.model 'Admin' do
     label_plural "公司人员"

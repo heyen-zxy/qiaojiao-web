@@ -12,6 +12,8 @@ class Attachment < ApplicationRecord
       UserAttachment
     when 'banner'
       BannerAttachment
+    when 'tag'
+      TagAttachment
     when 'server_user'
       ServerUserAttachment
     when 'public_message'

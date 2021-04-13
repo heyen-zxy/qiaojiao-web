@@ -1,0 +1,3 @@
+class TagAttachment < Attachment
+
+end
