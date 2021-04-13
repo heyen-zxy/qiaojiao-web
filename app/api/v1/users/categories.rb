@@ -8,7 +8,7 @@ module V1
         end
         desc '分类列表'
         get '/' do
-          categories = Category.where.not(ancestry_depth: 1).order('updated_at desc')
+          categories = Category.where(ancestry_depth: 1).order('updated_at desc')
           present categories, with: V1::Entities::Category
         end
 
