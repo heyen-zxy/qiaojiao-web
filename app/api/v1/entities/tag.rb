@@ -5,6 +5,7 @@ module V1
       #format_with(:parent) { |dt| instance.parent.name }
       expose :id
       expose :name
+      expose :category_id
       expose :tag_attachment, using: V1::Entities::Attachment
       with_options(format_with: :timestamp) do
         expose :created_at

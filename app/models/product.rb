@@ -86,6 +86,10 @@ class Product < ApplicationRecord
         p params[:category_id], 11111
         products = products.where category_id: params[:category_id]
       end
+      if params[:tag_id].present?
+        p params[:tag_id], 11111
+        products = products.where tag_id: params[:tag_id]
+      end
       if params[:product_type].present?
         products = products.where product_type: params[:product_type]
       end
