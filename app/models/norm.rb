@@ -9,18 +9,18 @@ class Norm < ApplicationRecord
 
   def user_commission user=nil
     if user&.company.present?
-      if high_commission.to_i > 0
-        high_commission.to_i
+      if high_commission.to_f > 0
+        high_commission.to_f
       else
-        commission.to_i
+        commission.to_f
       end
     else
-      commission.to_i
+      commission.to_f
     end
   end
 
   def admin_commission
-    product.admin_commission * price / 100
+    product.admin_commission.to_f * price / 100
   end
 
   def view_user_commission user=nil
@@ -28,11 +28,11 @@ class Norm < ApplicationRecord
   end
 
   def commission
-    product.commission * price / 100
+    product.commission.to_f * price / 100
   end
 
   def high_commission
-    product.high_commission * price / 100
+    product.high_commission.to_f * price / 100
   end
 
   def view_commission

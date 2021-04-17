@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_13_073522) do
+ActiveRecord::Schema.define(version: 2021_04_16_091740) do
 
   create_table "addresses", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "address_code"
@@ -214,16 +214,16 @@ ActiveRecord::Schema.define(version: 2021_04_13_073522) do
     t.string "name"
     t.string "status", default: "off"
     t.integer "sale", default: 0
-    t.integer "commission"
+    t.float "commission", default: 0.0
     t.text "desc"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "no"
     t.integer "amount", default: 0
     t.integer "main_attachment_id"
-    t.integer "high_commission"
+    t.float "high_commission", default: 0.0
     t.datetime "deleted_at"
-    t.integer "admin_commission", default: 0
+    t.float "admin_commission", default: 0.0
     t.integer "tag_id"
     t.index ["deleted_at"], name: "index_products_on_deleted_at"
   end

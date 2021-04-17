@@ -11,13 +11,7 @@ module V1
       expose :no
       expose :sale
       expose :amount
-      expose :view_commission do |instance, options|
-        if options[:user].present?
-          instance.max_commission options[:user]
-        else
-          0
-        end
-      end
+
       expose :desc do |instance, options|
         instance.desc.to_s
       end
