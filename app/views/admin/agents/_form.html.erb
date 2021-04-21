@@ -1,0 +1,44 @@
+<%= simple_form_for  [:admin, @agent], class: 'forms-sample' do |f| %>
+  <div class="box box box-info ">
+    <div class="box-body">
+      <div class="row city-group">
+        <div class="col-md-12">
+          <%= f.input :admin_id, collection: Admin.joins(:role).where('roles.tag': :agent).collect{|c| ["#{c.name}-#{c.phone}", c.id]}, label: '登录账号' %>
+        </div>
+        <div class="col-md-12 form-group">
+          <%= f.input :company_name, label: '代理商名' %>
+        </div>
+
+        <div class="col-md-12 form-group">
+          <%= f.input :name, label: '法人姓名' %>
+        </div>
+
+        <div class="col-md-12 form-group">
+          <%= f.input :phone, label: '联系电话' %>
+        </div>
+
+        <div class="col-md-3 form-group">
+          <%= f.input  :province, collection: ChinaCity.list,  input_html: {class: 'city-select'}, class: 'col-md-2'%>
+        </div>
+
+        <div class="col-md-3 form-group city-group">
+          <%= f.input  :city, collection: ChinaCity.list(@agent.province),  input_html: { class: 'city-select col-md-2' }%>
+        </div>
+
+        <div class="col-md-3 form-group city-group">
+          <%= f.input  :county, collection: ChinaCity.list(@agent.city), input_html: {class: 'city-select col-md-2'}%>
+        </div>
+
+      </div>
+      <div class="row">
+        <div class="col-md-11">
+        </div>
+        <div class="col-md-1">
+          <%= f.submit '确认', class: 'btn btn-primary' %>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+

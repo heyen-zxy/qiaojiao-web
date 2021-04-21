@@ -30,9 +30,45 @@ class Ability
     #
     # See the wiki for details:
     # https://github.com/CanCanCommunity/cancancan/wiki/Defining-Abilities
-    p user.role? :super_admin
+
     if user.role? :super_admin
       can :manage, :all
+    end
+
+    if user.role? :super_admin
+      can :manage, :all
+    end
+
+    if user.role? :agent
+      can :products, :index
+
+      can :orders, :index
+      can :orders, :show
+      can :orders, :server_admins
+      can :orders, :set_server_admin
+      can :orders, :get_desc
+      can :orders, :set_desc
+      can :orders, :show
+
+      can :users, :index
+      can :users, :qrcode
+      can :users, :set_admin
+      can :users, :admin
+
+      can :admin_commission_logs, :index
+
+      can :server_users, :index
+      can :server_users, :cash_form
+      can :server_users, :cash
+
+      can :profiles, :edit
+      can :profiles, :update
+
+      can :in_payments, :index
+
+      user.role&.resources&.each do |resource|
+        can resource.target.to_sym, resource.action.to_sym
+      end
     end
   end
 end

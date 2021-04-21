@@ -3,7 +3,7 @@ class Admin::OrdersController < Admin::BaseController
 
   def index
     params[:status] ||= 'paid'
-    @orders = Order.search_conn(params).order('orders.updated_at desc').page(params[:page]).per(20)
+    @orders = current_admin.orders.search_conn(params).order('orders.updated_at desc').page(params[:page]).per(20)
   end
 
   def show
@@ -28,7 +28,7 @@ class Admin::OrdersController < Admin::BaseController
 
   private
   def set_order
-    @order = Order.find_by id: params[:id]
+    @order = current_admin.orders.find_by id: params[:id]
     redirect_to admin_orders_path, alert: '找不到数据' if @order.blank?
   end
 

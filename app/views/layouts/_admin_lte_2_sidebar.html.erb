@@ -25,71 +25,101 @@
     <ul class="sidebar-menu">
       <li class="header">HEADER</li>
         <!-- Optionally, you can add icons to the links -->
-      <li class="<%= active_class :products %>">
-        <%= link_to admin_products_path do %>
-          <i class="fa fa-shopping-cart"></i> <span>商品、服务</span>
-        <% end %>
-      </li>
+      <% if can? :products, :index %>
+        <li class="<%= active_class :products %>">
+          <%= link_to admin_products_path do %>
+            <i class="fa fa-shopping-cart"></i> <span>商品、服务</span>
+          <% end %>
+        </li>
+      <% end %>
 
+      <% if can? :orders, :index %>
       <li class="<%= active_class :orders %>">
         <%= link_to admin_orders_path do %>
           <i class="fa fa-reorder"></i> <span>订单</span>
         <% end %>
       </li>
+      <% end %>
 
+      <% if can? :users, :index %>
       <li class="<%= active_class :users %>">
         <%= link_to admin_users_path do %>
           <i class="fa fa-users"></i> <span>用户</span>
         <% end %>
       </li>
+      <% end %>
 
+      <% if can? :server_users, :index %>
       <li class="<%= active_class :server_users %>">
         <%= link_to admin_server_users_path do %>
-          <i class="fa  fa-user-secret"></i> <span>师傅、配送人员</span>
+          <i class="fa  fa-truck"></i> <span>师傅、配送人员</span>
         <% end %>
       </li>
+      <% end %>
 
+      <% if can? :in_payments, :index %>
       <li class="<%= active_class :in_payments %>">
         <%= link_to admin_in_payments_path do %>
           <i class="fa fa-mail-reply "></i> <span>用户支付记录</span>
         <% end %>
       </li>
+      <% end %>
 
+      <% if can? :user_commission_logs, :index %>
       <li class="<%= active_class :user_commission_logs %>">
         <%= link_to admin_user_commission_logs_path do %>
           <i class="fa fa-share-alt"></i> <span>用户分享佣金记录</span>
         <% end %>
       </li>
+      <% end %>
 
+      <% if can? :admin_commission_logs, :index %>
       <li class="<%= active_class :admin_commission_logs %>">
         <%= link_to admin_admin_commission_logs_path do %>
-          <i class="fa fa-truck"></i> <span>师傅佣金记录</span>
+          <i class="fa fa-money"></i> <span>师傅佣金记录</span>
         <% end %>
       </li>
+      <% end %>
 
+      <% if can? :banners, :index %>
       <li class="<%= active_class :banners %>">
         <%= link_to admin_banners_path do %>
           <i class="fa  fa-file-image-o"></i> <span>流动广告</span>
         <% end %>
       </li>
+      <% end %>
 
+      <% if can? :news, :index %>
       <li class="<%= active_class :news %>">
         <%= link_to admin_news_index_path do %>
           <i class="fa fa-newspaper-o"></i> <span>文字流动广告</span>
         <% end %>
       </li>
+      <% end %>
 
+      <% if can? :public_messages, :index %>
       <li class="<%= active_class :public_messages %>">
         <%= link_to admin_public_messages_path do %>
           <i class="fa fa-comment-o"></i> <span>本地消息</span>
         <% end %>
       </li>
+      <% end %>
 
+      <% if can? :tags, :index %>
       <li class="<%= active_class :tags %>">
         <%= link_to admin_tags_path do %>
           <i class="fa fa-star"></i> <span>分类扩展</span>
         <% end %>
       </li>
+      <% end %>
+
+      <% if can? :agents, :index %>
+      <li class="<%= active_class :agents %>">
+        <%= link_to admin_agents_path do %>
+          <i class="fa fa-user-secret"></i> <span>代理商</span>
+        <% end %>
+      </li>
+      <% end %>
 
 
 

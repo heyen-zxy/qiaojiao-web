@@ -1,0 +1,15 @@
+<tr id="agent_<%= agent.id %>">
+  <td><%= agent.company_name %></td>
+  <td><%= agent.name %></td>
+  <td ><%= agent.phone %></td>
+  <td ><%= agent.admin&.phone %></td>
+  <td ><%= agent.city_name %></td>
+  <td>
+    <%= link_to edit_admin_agent_path(agent),class: "btn btn-primary btn-xs" do %>
+      <i class="fa fa-edit"></i>编辑
+    <% end %>
+    <%= link_to admin_agent_path(agent), 'data-confirm': "确认删除吗", method: 'delete',class: "btn btn-danger btn-xs" do %>
+      <i class="fa fa-close"></i>删除
+    <% end %>
+  </td>
+</tr>

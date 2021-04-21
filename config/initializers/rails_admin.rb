@@ -34,7 +34,7 @@ RailsAdmin.config do |config|
   config.included_models = ["Resource", 'Role', 'Category', 'MessageType','Admin', 'Company', 'UserCommission']
 
   config.model 'Admin' do
-    label_plural "公司人员"
+    label_plural "登录账号管理"
     field :phone do
       label '手机号'
     end

@@ -1,17 +1,20 @@
 <div class="col-md-12">
   <div class="box">
     <div class="box-header with-border">
-      <h3 class="box-title">配送服务人员列表 <small style="color: red">师傅总余额：<%= @amount %> </small>
+      <h3 class="box-title">代理商
+        <% if can? :new, :agents %>
+          <small><%= link_to '添加', new_admin_agent_path, class: 'font-a label bg-green' %></small>
+        <% end %>
       </h3>
     </div>
     <div class="box-tools" style="margin-top: 10px;">
-      <%= form_tag admin_server_users_path, method: :get do %>
+      <%= form_tag admin_agents_path, method: :get do %>
         <div class="input-group input-group-sm">
           <div>
             <div class="col-xs-6 col-md-6"></div>
             <div class="col-xs-6 col-md-3"></div>
             <div class="col-xs-6 col-md-3">
-              <input type="text" name="table_search" class="form-control" placeholder="姓名、手机号检索" value="<%= params[:table_search] %>">
+              <input type="text" name="table_search" class="form-control" placeholder="名称、号码搜索" value="<%= params[:table_search] %>">
             </div>
           </div>
 
@@ -25,25 +28,23 @@
     <div class="box-body">
       <table class="table table-striped">
         <tbody>
-          <tr>
-            <th>所属代理商</th>
-            <th>姓名</th>
-            <th>手机号</th>
-            <th>累计佣金</th>
-            <th>已提现</th>
-            <th>当前余额</th>
-            <th></th>
-          </tr>
-          <% @admins.each do |admin| %>
-            <%= render partial: 'admin/server_users/user', locals: {admin: admin} %>
-          <% end %>
+        <tr>
+          <th>代理商名</th>
+          <th>法人姓名</th>
+          <th>联系电话</th>
+          <th>登录账号</th>
+          <th>代理城市</th>
+          <th></th>
+        </tr>
+        <% @agents.each do |agent| %>
+          <%= render partial: 'admin/agents/agent', locals: {agent: agent}%>
+        <% end %>
         </tbody>
-
       </table>
     </div>
     <div class="box-footer clearfix">
       <div class="pull-right pagination-sm no-margin">
-        <%= paginate @admins, params: {table_search: params[:table_search]} %>
+        <%= paginate @agents, params: {status: params[:status], agent_type: params[:agent_type], table_search: params[:table_search]}%>
       </div>
 
     </div>

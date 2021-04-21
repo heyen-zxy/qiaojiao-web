@@ -10,13 +10,13 @@
   <td><%= "#{user.company&.name}#{user.company&.user_name}#{user.company&.phone}" %></td>
   <td><%= "#{user.admin&.name}-#{user.admin&.phone}" %></td>
   <td>
-    <% if can? :users, :set_admin %>
+    <% if can? :users, :admin %>
       <%= link_to admin_admin_user_path(user), class: "btn btn-danger btn-xs", 'data-toggle' => "modal", 'data-target' => "#myModal" do %>
-        绑定内部人员
+        绑定师傅配送人员
       <% end %>
     <% end %>
 
-    <% if can? :users, :set_company %>
+    <% if can? :users, :company %>
       <%= link_to company_admin_user_url(user), class: "btn btn-success btn-xs", 'data-toggle' => "modal", 'data-target' => "#myModal" do %>
         绑定商户
       <% end %>
@@ -28,8 +28,10 @@
       <% end %>
     <% end %>
 
+    <% if can?(:user_commission_logs, :index) %>
       <%= link_to admin_user_commission_logs_path(user_id: user.id), class: "btn btn-primary  btn-xs" do %>
         佣金记录
       <% end %>
+    <% end %>
   </td>
 </tr>

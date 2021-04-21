@@ -8,7 +8,7 @@
       <div class="box-body">
         <div class="row">
           <div class="col-md-12 form-group">
-            <%= f.input :admin_id, collection: Admin.server_users_select, label: '配送服务人员', input_html: {style: 'width: 100%'} %>
+            <%= f.input :admin_id, collection: current_user.server_users_select, label: '配送服务人员', input_html: {style: 'width: 100%'} %>
           </div>
         </div>
       </div>

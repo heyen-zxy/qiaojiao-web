@@ -1,8 +1,9 @@
 class Admin::ServerUsersController < Admin::BaseController
-  before_action :set_admin, only: [:cash, :cash_form]
+  before_action :set_admin, only: [:cash, :cash_form, :agent, :set_agent]
   def index
-    params[:status] ||= 'on'
-    @admins = Admin.joins(:role).where('roles.tag': :server_user).search_conn(params).order('admins.updated_at desc').page(params[:page]).per(20)
+    all_admins = current_admin.server_users.joins(:role, :admin_commission).where('roles.tag': :server_user)
+    @amount = all_admins.sum('admin_commissions.commission_wait') / 100.0
+    @admins = all_admins.search_conn(params).order('admins.updated_at desc').page(params[:page]).per(20)
   end
 
   def cash_form
@@ -25,8 +26,16 @@ class Admin::ServerUsersController < Admin::BaseController
     @flag =  @log.update commission: -(params[:commission].to_f*100), desc: params[:desc], admin_commission: admin_commission
   end
 
+  def agent
+    render layout: false
+  end
+
+  def set_agent
+    @admin.update agent_id: params[:agent_id]
+  end
+
   def set_admin
-    @admin = Admin.find_by id: params[:id]
+    @admin = current_admin.server_users.find_by id: params[:id]
   end
 
 

@@ -7,7 +7,7 @@
   <td><%= order.admin&.name %></td>
   <td><%= simple_datetime order.payment_at %></td>
   <td>
-    <% if can? :orders, :view %>
+    <% if can? :orders, :show %>
         <%= link_to admin_order_path(order), class: "btn btn-success btn-xs", 'data-toggle' => "modal", 'data-target' => "#myModal" do %>
         <i class="fa fa-edit"></i>详情
       <% end %>

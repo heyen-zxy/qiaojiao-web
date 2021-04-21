@@ -1,0 +1,24 @@
+<%= simple_form_for  @admin, method: :patch, url: admin_profile_path , class: 'forms-sample' do |f| %>
+  <div class="box box box-info ">
+    <div class="box-body">
+      <div class="row city-group">
+        <div class="col-md-12">
+          <%= f.input :old_password, label: '旧密码' %>
+        </div>
+        <div class="col-md-12 form-group">
+          <%= f.input :password, label: '新密码' %>
+        </div>
+
+      </div>
+      <div class="row">
+        <div class="col-md-11">
+        </div>
+        <div class="col-md-1">
+          <%= f.submit '确认', class: 'btn btn-primary' %>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+

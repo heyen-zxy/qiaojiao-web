@@ -9,7 +9,7 @@
         <div class="input-group input-group-sm">
           <div>
             <div class="col-xs-6 col-md-3">
-              <%= select_tag :admin_id, options_for_select(Admin.server_users.collect{|admin| ["#{admin.name}-#{admin.phone}", admin.id]}, params[:admin_id]), include_blank: '配送服务人员', class: 'form-control' %>
+              <%= select_tag :admin_id, options_for_select(current_admin.server_users.collect{|admin| ["#{admin.name}-#{admin.phone}", admin.id]}, params[:admin_id]), include_blank: '配送服务人员', class: 'form-control' %>
             </div>
 
             <div class="col-xs-6 col-md-3">

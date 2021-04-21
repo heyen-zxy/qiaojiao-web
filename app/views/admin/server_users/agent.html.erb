@@ -1,17 +1,17 @@
 <div class="modal-header">
   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
     <span aria-hidden="true">×</span></button>
-  <h4 class="modal-title">师傅、配送人员</h4>
+  <h4 class="modal-title">所属代理商</h4>
 </div>
 <div class="modal-body">
-  <%= simple_form_for  [:admin, @user], class: 'forms-sample' do |f| %>
-      <div class="box-body">
-        <div class="row">
-          <div class="col-md-12 form-group">
-            <%= f.input :admin_id, collection: current_admin.server_users_select, label: '内部人员', input_html: {style: 'width: 100%'} %>
-          </div>
+  <%= simple_form_for  @admin, url: '', class: 'forms-sample' do |f| %>
+    <div class="box-body">
+      <div class="row">
+        <div class="col-md-12 form-group">
+          <%= f.input :agent_id, collection: Agent.all.collect{|agent| ["#{agent.company_name}-#{agent.name}", agent.id]}, label: '所属代理商', input_html: {style: 'width: 100%'} %>
         </div>
       </div>
+    </div>
   <% end %>
 </div>
 <div class="modal-footer">
@@ -26,8 +26,8 @@
       showSpinner()
       $.ajax({
         type: 'POST',
-        url: '<%= set_admin_admin_user_path %>',
-        data: {admin_id: $('#user_admin_id').val()},
+        url: '<%= set_agent_admin_server_user_path %>',
+        data: {agent_id: $('#admin_agent_id').val()},
         dataType: 'script',
         success: function (data) {
 

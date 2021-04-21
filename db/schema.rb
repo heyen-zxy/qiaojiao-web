@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_16_091740) do
+ActiveRecord::Schema.define(version: 2021_04_21_062800) do
 
   create_table "addresses", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "address_code"
@@ -63,9 +63,23 @@ ActiveRecord::Schema.define(version: 2021_04_16_091740) do
     t.string "name"
     t.string "login"
     t.datetime "deleted_at"
+    t.integer "agent_id"
     t.index ["deleted_at"], name: "index_admins_on_deleted_at"
     t.index ["phone"], name: "index_admins_on_phone"
     t.index ["reset_password_token"], name: "index_admins_on_reset_password_token", unique: true
+  end
+
+  create_table "agents", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "province"
+    t.string "city"
+    t.string "county"
+    t.string "name"
+    t.string "company_name"
+    t.string "address"
+    t.string "phone"
+    t.integer "admin_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "attachments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|

@@ -63,7 +63,19 @@
         <td><%= @order.desc %></td>
       </tr>
 
+      <tr>
+        <th>服务证据图</th>
+      </tr>
+
       </tbody></table>
+    <div>
+    </div>
+    <div>
+      <% @order.attachments.each do |a| %>
+        <%= image_tag a.preview_url, style: 'width: 150px;height:150px' %>
+      <% end %>
+    </div>
+
   </div>
 </div>
 <div class="modal-footer">

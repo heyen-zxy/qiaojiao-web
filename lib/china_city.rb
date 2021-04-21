@@ -39,6 +39,19 @@ module ChinaCity
       return "#{prepend_parent ? (province_text + ' ' + city_text) : ''} #{children[id][:text]}"
     end
 
+    def get_ids(id, options = {})
+      return '' if id.blank?
+      prepend_parent = options[:prepend_parent] || false
+      children = data
+      return children[id] if children.has_key?(id)
+      province_id = province(id)
+      children = children[province_id][:children]
+      return "#{prepend_parent ? province_id : ''}#{children[id]}" if children.has_key?(id)
+      city_id = city(id)
+      children = children[city_id][:children]
+      return "#{prepend_parent ? (province_id + ' ' + city_id) : ''} #{children[id]}"
+    end
+
     def province(code)
       match(code)[1].ljust(6, '0')
     end

@@ -19,6 +19,8 @@ Rails.application.routes.draw do
         post :set_desc
       end
     end
+
+    resource :profile
     resources :users do
       member do
         get :company
@@ -55,6 +57,7 @@ Rails.application.routes.draw do
     end
 
     resources :tags
+    resources :agents
 
     resources :admin_commission_logs
     resources :user_commission_logs
@@ -63,8 +66,12 @@ Rails.application.routes.draw do
       member do
         get :cash_form
         post :cash
+        get :agent
+        post :set_agent
       end
     end
   end
+
+  mount ChinaCity::Engine => '/china_city'
 
 end
