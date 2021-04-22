@@ -22,7 +22,10 @@ module V1
           present paginate(products), with: V1::Entities::Product, user: @current_user
         end
 
-        desc '根据norm_id'
+        desc '补差价商品'
+        get :charge_product_id do
+          {charge_product_id: Product.charge_product_id}
+        end
 
         desc '推荐商品'
         get 'recommend' do

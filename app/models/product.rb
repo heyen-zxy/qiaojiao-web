@@ -21,6 +21,10 @@ class Product < ApplicationRecord
       service: '服务'
   }
 
+  def self.charge_product_id
+    Product.find_by(name: '上门安装维修补差价')&.id
+  end
+
   def get_status
     Product::statuses[self.status.to_sym]
   end

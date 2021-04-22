@@ -12,6 +12,7 @@ module V1
       expose :view_amount
       expose :desc
       expose :view_commission
+      expose :admin_id
       expose :attachments, using: V1::Entities::Attachment
       with_options(format_with: :timestamp) do
         expose :payment_at, documentation: { type: 'Timestamp' }

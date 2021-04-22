@@ -59,17 +59,18 @@ class Admin < ApplicationRecord
     if role? :super_admin
       Order.all
     elsif (role? :agent) && agent&.county.present?
-      Order.joins(:address).where('addresses.address_code': agent.county)
+      Order.joins(:address, {order_norms: :product}).where('addresses.address_code': agent.county, 'products.product_type': '服务')
     else
       Order.where('1= -1')
     end
   end
 
   def in_payments
+
     if role? :super_admin
       InPayment.all
     elsif (role? :agent) && agent&.county.present?
-      InPayment.joins(order: [:address, {admin: :server_agent}]).where('agents.admin_id': self.id, 'addresses.address_code': agent.county)
+      InPayment.joins(order: [:address, {order_norms: :product}]).where('addresses.address_code': agent.county, 'products.product_type': '服务')
     else
       InPayment.where('1= -1')
     end

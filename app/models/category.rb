@@ -10,6 +10,10 @@ class Category < ApplicationRecord
     products.on
   end
 
+  def service
+
+  end
+
   class << self
     def select_options
       Category.where.not(ancestry: nil).collect{|category| [category.name, category.id]}
