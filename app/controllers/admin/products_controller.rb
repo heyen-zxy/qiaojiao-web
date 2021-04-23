@@ -68,7 +68,7 @@ class Admin::ProductsController < Admin::BaseController
     @product.commission = params[:product][:commission].to_f * 100 if params[:product][:commission].present?
     @product.high_commission = params[:product][:high_commission].to_f * 100 if params[:product][:high_commission].present?
     if @product.update product_permit
-      redirect_to admin_products_path, notice: '添加成功'
+      redirect_to admin_products_path, notice: '编辑成功'
     else
       render :edit
     end
