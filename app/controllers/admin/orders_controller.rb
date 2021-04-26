@@ -16,6 +16,7 @@ class Admin::OrdersController < Admin::BaseController
 
   def set_server_admin
     @order.update admin_id: params[:admin_id]
+    NotificationJob.perform_later @order.id.to_s, 'work_message_send'
   end
 
   def get_desc

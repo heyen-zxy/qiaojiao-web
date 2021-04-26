@@ -11,6 +11,7 @@ class Order < ApplicationRecord
   has_many :payments
   belongs_to :commission_log, optional: true
   has_and_belongs_to_many :attachments, join_table: 'model_attachments', foreign_key:  :model_id, class_name: 'ServerAttachment', association_foreign_key: :attachment_id
+  after_update :send_job_message
   STATUS = { wait: '待付款', paid: '已支付', served: '已完成', cancel: '已取消'}
   aasm :status do
     state :wait, :initial => true
@@ -53,6 +54,7 @@ class Order < ApplicationRecord
 
   end
 
+
   def current_payment
     payments.last
   end
@@ -83,6 +85,7 @@ class Order < ApplicationRecord
 
   def after_pay
     self.update payment_at: DateTime.now
+    NotificationJob.perform_later id.to_s, 'payment_message_send'
     set_sale
   end
 
@@ -93,6 +96,7 @@ class Order < ApplicationRecord
   end
 
   def do_after_server
+    NotificationJob.perform_later id.to_s, 'served_message_send'
     set_server_at
     set_commission
   end
@@ -132,6 +136,7 @@ class Order < ApplicationRecord
     self.update server_at: DateTime.now
   end
 
+
   # h5CtjMGbiLCl7aICaxndzkAa5ExNx7_qVCYN4oiIJSM
   # 模板编号
   # 2025
@@ -147,6 +152,51 @@ class Order < ApplicationRecord
   # {{character_string6.DATA}}
   # 派工内容
   # {{thing2.DATA}}
+  def work_message_send
+      openid = user.open_id
+      return unless openid.present?
+      payload = { touser: openid,
+                  template_id: 'h5CtjMGbiLCl7aICaxndzkAa5ExNx7_qVCYN4oiIJSM',
+                  page: "/pages/my/index",
+                  data: {
+                      name1: { value: '江西佳匠服务有限公司' },
+                      name3: { value: admin&.name },
+                      phone_number4: { value: admin&.phone },
+                      character_string6: { value: no },
+                      thing2: { value: '已经为您指派上门服务的师傅' }
+                  }
+      }
+      n = user.notifications.new content: payload.to_json, order: self
+      begin
+        res = Wechat.api.subscribe_message_send payload
+        n.update resp: res, status: 'success'
+      rescue => e
+        n.update resp: e.message, status: 'failed'
+      end
+
+      openid = admin&.user&.open_id
+      return unless openid.present?
+      payload = { touser: openid,
+                  template_id: 'h5CtjMGbiLCl7aICaxndzkAa5ExNx7_qVCYN4oiIJSM',
+                  page: "/pages/my/index",
+                  data: {
+                      name1: { value: '江西佳匠服务有限公司' },
+                      name3: { value: address&.name },
+                      phone_number4: { value: address&.phone },
+                      character_string6: { value: no },
+                      thing2: { value: '给您分发了服务订单' }
+                  }
+      }
+      n = user.notifications.new content: payload.to_json, order: self
+      begin
+        res = Wechat.api.subscribe_message_send payload
+        n.update resp: res, status: 'success'
+      rescue => e
+        n.update resp: e.message, status: 'failed'
+      end
+  end
+
+
   #
   # YEWcpJmcPiVeAg6igaGkcW1cSFGKn8ZaZOM5RZIpBZg
   # 模板编号
@@ -162,7 +212,25 @@ class Order < ApplicationRecord
   # {{date4.DATA}}
   # 备注
   # {{thing5.DATA}}
-  #
+  def served_message_send
+    payload = { touser: user.open_id,
+                template_id: 'YEWcpJmcPiVeAg6igaGkcW1cSFGKn8ZaZOM5RZIpBZg',
+                page: "/pages/my/index",
+                data: {
+                    phrase2: { value: get_status },
+                    date4: { value: DateTime.now.strftime('%Y-%m-%d %H:%M:%S') },
+                    character_string1: { value: no },
+                    thing5: { value: '师傅已经完成服务' },
+                }
+    }
+    n = user.notifications.new content: payload.to_json, order: self
+    begin
+      res = Wechat.api.subscribe_message_send payload
+      n.update resp: res, status: 'success'
+    rescue => e
+      n.update resp: e.message, status: 'failed'
+    end
+  end
   # 模板ID
   # A0-kDcODKZr7h-Zc-EEKQFzhaKABp6Ug0m5LfKcdesk
   # 模板编号
@@ -176,6 +244,24 @@ class Order < ApplicationRecord
   # {{character_string1.DATA}}
   # 场景说明
   # 订单支付成功通知
+  def payment_message_send
+    payload = { touser: user.open_id,
+                template_id: 'A0-kDcODKZr7h-Zc-EEKQFzhaKABp6Ug0m5LfKcdesk',
+                page: "/pages/my/index",
+                data: {
+                    thing3: { value: norms&.first&.product&.name },
+                    date2: { value: (payment_at || DateTime.now)&.strftime('%Y-%m-%d %H:%M:%S') },
+                    character_string1: { value: no }
+                }
+    }
+    n = user.notifications.new content: payload.to_json, order: self
+    begin
+      res = Wechat.api.subscribe_message_send payload
+      n.update resp: res, status: 'success'
+    rescue => e
+      n.update resp: e.message, status: 'failed'
+    end
+  end
 
   class << self
     def status_select
@@ -185,7 +271,7 @@ class Order < ApplicationRecord
     #{norm_array: [{id: 1, number: 2}, {id: 4, number: 1}]}
     def save_orders user, params={}
       order = user.orders.new
-      from_token = params['from_token']
+      from_token = params['from_token'] || params[:from_token]
       if from_token.present?
         share_user = User.find_by(id: from_token)
       end

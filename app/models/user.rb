@@ -10,6 +10,7 @@ class User < ApplicationRecord
   belongs_to :company, optional: true
   has_one :user_commission
   has_many :user_commission_logs
+  has_many :notifications
   acts_as_paranoid
 
   def get_gender
