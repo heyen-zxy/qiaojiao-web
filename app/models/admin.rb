@@ -55,7 +55,7 @@ class Admin < ApplicationRecord
     server_users.collect{|admin| ["#{admin.name}-#{admin.phone}", admin.id]}
   end
 
-  def orders
+  def show_orders
     if role? :super_admin
       Order.all
     elsif (role? :agent) && agent&.county.present?
