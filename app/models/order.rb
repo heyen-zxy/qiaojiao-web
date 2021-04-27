@@ -11,7 +11,6 @@ class Order < ApplicationRecord
   has_many :payments
   belongs_to :commission_log, optional: true
   has_and_belongs_to_many :attachments, join_table: 'model_attachments', foreign_key:  :model_id, class_name: 'ServerAttachment', association_foreign_key: :attachment_id
-  after_update :send_job_message
   STATUS = { wait: '待付款', paid: '已支付', served: '已完成', cancel: '已取消'}
   aasm :status do
     state :wait, :initial => true
