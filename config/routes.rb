@@ -7,7 +7,7 @@ Rails.application.routes.draw do
   devise_for :admins, controllers: {
     sessions: 'admins/sessions'
   }
-  root to: 'admin/products#index'
+  root to: 'admin/orders#index'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   namespace :admin, path: ""  do
     root to: 'orders#index'
