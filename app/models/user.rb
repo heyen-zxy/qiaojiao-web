@@ -69,7 +69,8 @@ class User < ApplicationRecord
     end
 
     def init_by_web_code code
-      res = JSON.parse get_session(code).body
+      # res = JSON.parse get_session(code).body
+      res = Wechat.api.jscode2session(code)
       if res && res['openid']
         user = User.find_or_initialize_by open_id: res['openid']
         user.authentication_token ||= generate_authentication_token
