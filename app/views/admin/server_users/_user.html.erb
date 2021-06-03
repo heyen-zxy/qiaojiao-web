@@ -17,6 +17,12 @@
       <% end %>
     <% end %>
 
+    <% if can? :server_users, :adjust_form %>
+      <%= link_to adjust_form_admin_server_user_path(admin), class: "btn btn-default btn-xs", 'data-toggle' => "modal", 'data-target' => "#myModal" do %>
+        调整
+      <% end %>
+    <% end %>
+
     <% if can? :server_users, :agent %>
       <%= link_to agent_admin_server_user_path(admin), class: "btn btn-warning btn-xs", 'data-toggle' => "modal", 'data-target' => "#myModal" do %>
         所属代理商

@@ -13,5 +13,5 @@
   <td style="color: <%= log.view_commission > 0 ? 'green' : 'red'%>"><%= log.view_commission %></td>
   <td><%= log.view_commission_after %></td>
   <td><%= log.updated_at.strftime '%Y-%m-%d %H:%M:%S'  %></td>
-  <td></td>
+  <td><%= log.desc %></td>
 </tr>

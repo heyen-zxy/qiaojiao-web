@@ -68,6 +68,8 @@ Rails.application.routes.draw do
         post :cash
         get :agent
         post :set_agent
+        get :adjust_form
+        post :adjust
       end
     end
   end

@@ -117,7 +117,7 @@ zh-CN:
         user_id: '报备人'
         phone: '联系电话'
       admin_commission_log:
-        commission: '提现金额'
+        commission: '金额'
         desc: '备注'
       user_commission_log:
         commission: '提现金额'
